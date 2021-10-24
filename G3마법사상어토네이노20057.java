@@ -5,6 +5,8 @@ public class G3마법사상어토네이노20057 {
     static int map[][];
 
     //왼쪽, 아래, 오른쪽, 위 순서
+    
+    
     static int dx[] = {0, 1, 0, -1};
     static int dy[] = {-1, 0, 1, 0};
 
