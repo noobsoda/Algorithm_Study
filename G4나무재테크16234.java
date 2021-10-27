@@ -7,16 +7,18 @@ public class G4나무재테크16234 {
     static int map[][];
     static int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
     static int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
-    static List<Node> arr;
-    static Node node;
+    static List<node> list;
+    static node node;
 
     public static void spring(){
-        for(Iterator<Node> it = arr.iterator(); it.hasNext();){
+        for(Iterator<node> it = list.iterator(); it.hasNext();){
             node = it.next();
+            //어린 나무부터 양분 먹기
             if(map[node.x][node.y] >= node.z){
                 map[node.x][node.y] -= node.z;
                 node.z++;
             }   
+            //양분 못먹으면 즉사
             else{
                 node.alive = false;
             }
@@ -24,8 +26,9 @@ public class G4나무재테크16234 {
         
     }
     public static void summer(){    
-        for(Iterator<Node> it = arr.iterator(); it.hasNext();){
+        for(Iterator<node> it = list.iterator(); it.hasNext();){
             node = it.next();
+            
             if(node.alive == false){
                 map[node.x][node.y] += node.z / 2;
                 it.remove();
@@ -35,19 +38,20 @@ public class G4나무재테크16234 {
     }
 
     public static void autumn(){
-        List<Node> newarr = new LinkedList<>();
-        for(Iterator<Node> it = arr.iterator(); it.hasNext();){
+        List<node> newlist = new LinkedList<>();
+        for(Iterator<node> it = list.iterator(); it.hasNext();){
             node = it.next();
             if(node.z % 5 == 0){
                 for(int j = 0; j < 8; j++){                    
                     int nx = node.x + dx[j];
                     int ny = node.y + dy[j];
                     if(nx < 1 || ny < 1 || nx > N || ny > N)    continue;
-                    newarr.add(new Node(nx, ny, 1, true));
+                    newlist.add(new node(nx, ny, 1, true));
                 }
             }
         }
-        arr.addAll(0, newarr);
+        //0번지부터 넣어줘서 정렬할 필요 없음
+        list.addAll(0, newlist);
         
     }
 
@@ -69,7 +73,7 @@ public class G4나무재테크16234 {
 
         map = new int[N+1][N+1];
         pmap = new int[N+1][N+1];
-        arr = new LinkedList<>();
+        list = new LinkedList<>();
 
         for(int i = 1; i <= N; i++){
             nv = br.readLine().split(" ");
@@ -83,7 +87,7 @@ public class G4나무재테크16234 {
             int x = Integer.parseInt(nv[0]);
             int y = Integer.parseInt(nv[1]);
             int z = Integer.parseInt(nv[2]);
-            arr.add(new Node(x, y, z, true));
+            list.add(new node(x, y, z, true));
         }
 
         for(int i = 0; i < K; i++){
@@ -92,27 +96,27 @@ public class G4나무재테크16234 {
             autumn();
             winter();
         }
-        System.out.println(arr.size());
+        System.out.println(list.size());
         
 
 
 
     }
-    static class Node implements Comparable<Node>{
+    static class node implements Comparable<node>{
         int x, y, z;
         boolean alive;
-        public Node(int x, int y, int z, boolean alive){
+        public node(int x, int y, int z, boolean alive){
             this.x = x;
             this.y = y;
             this.z = z;
             this.alive = alive;
         }
         @Override
-        public int compareTo(Node o){
+        public int compareTo(node o){
             return this.z - o.z;
         }
         
     }
 }
-
+//arrayList를 쓰면 시간 초과 
 //https://www.acmicpc.net/problem/16235

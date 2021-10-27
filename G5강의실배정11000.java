@@ -22,13 +22,15 @@ public class G5강의실배정11000 {
 
         Arrays.sort(lecture);
 
-        pq.offer(lecture[0].t);
+        //맨 처음 수업 끝나는 시간 삽입
+        pq.add(lecture[0].t);
         
         for(int i = 1; i < N; i++){
+            //pq최상위부분과 그 다음수업 시작지점 비교해서 정답이면 폭
             if(pq.peek() <= lecture[i].s){
                 pq.poll();
             }             
-            pq.offer(lecture[i].t);   
+            pq.add(lecture[i].t);   
         }
 
         System.out.println(pq.size());
@@ -53,4 +55,5 @@ public class G5강의실배정11000 {
     
 }
 
+//시작지점부터 정렬하는걸 몰랐음
 //https://www.acmicpc.net/problem/11000
