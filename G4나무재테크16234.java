@@ -7,11 +7,11 @@ public class G4나무재테크16234 {
     static int map[][];
     static int dx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
     static int dy[] = {-1, 0, 1, -1, 1, -1, 0, 1};
-    static List<node> list;
-    static node node;
+    static List<Node> list;
+    static Node node;
 
     public static void spring(){
-        for(Iterator<node> it = list.iterator(); it.hasNext();){
+        for(Iterator<Node> it = list.iterator(); it.hasNext();){
             node = it.next();
             //어린 나무부터 양분 먹기
             if(map[node.x][node.y] >= node.z){
@@ -26,7 +26,7 @@ public class G4나무재테크16234 {
         
     }
     public static void summer(){    
-        for(Iterator<node> it = list.iterator(); it.hasNext();){
+        for(Iterator<Node> it = list.iterator(); it.hasNext();){
             node = it.next();
             
             if(node.alive == false){
@@ -38,15 +38,15 @@ public class G4나무재테크16234 {
     }
 
     public static void autumn(){
-        List<node> newlist = new LinkedList<>();
-        for(Iterator<node> it = list.iterator(); it.hasNext();){
+        List<Node> newlist = new LinkedList<>();
+        for(Iterator<Node> it = list.iterator(); it.hasNext();){
             node = it.next();
             if(node.z % 5 == 0){
                 for(int j = 0; j < 8; j++){                    
                     int nx = node.x + dx[j];
                     int ny = node.y + dy[j];
                     if(nx < 1 || ny < 1 || nx > N || ny > N)    continue;
-                    newlist.add(new node(nx, ny, 1, true));
+                    newlist.add(new Node(nx, ny, 1, true));
                 }
             }
         }
@@ -87,7 +87,7 @@ public class G4나무재테크16234 {
             int x = Integer.parseInt(nv[0]);
             int y = Integer.parseInt(nv[1]);
             int z = Integer.parseInt(nv[2]);
-            list.add(new node(x, y, z, true));
+            list.add(new Node(x, y, z, true));
         }
 
         for(int i = 0; i < K; i++){
@@ -102,17 +102,17 @@ public class G4나무재테크16234 {
 
 
     }
-    static class node implements Comparable<node>{
+    static class Node implements Comparable<Node>{
         int x, y, z;
         boolean alive;
-        public node(int x, int y, int z, boolean alive){
+        public Node(int x, int y, int z, boolean alive){
             this.x = x;
             this.y = y;
             this.z = z;
             this.alive = alive;
         }
         @Override
-        public int compareTo(node o){
+        public int compareTo(Node o){
             return this.z - o.z;
         }
         
