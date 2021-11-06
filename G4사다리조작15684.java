@@ -32,7 +32,6 @@ public class G4사다리조작15684 {
         return true;
     }
     public static boolean ladder(int h, int n, int depth, int max){
-        
         if(depth == max){
             if(check()){
                 leastline = depth;
@@ -43,6 +42,7 @@ public class G4사다리조작15684 {
         else{
             for(int i = h; i <= H; i++){
                 for(int j = n; j <= N; j++){
+                    // 양 옆에 가로줄 있으면 넘기기
                     if(visited[i][j] || visited[i][j-1] || visited[i][j+1])
                         continue;
                     visited[i][j] = true;
