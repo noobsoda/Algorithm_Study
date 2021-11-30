@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 public class G4미세먼지안녕17144 {
     static int R, C, T, air[];
