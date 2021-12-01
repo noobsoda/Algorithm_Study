@@ -9,25 +9,21 @@ public class G1온풍기안녕23289 {
     static List<Node> list;
     static List<Node> klist;
     static Queue<OnNode> q;
-    // 비우기, 오른쪽, 왼쪽, 위쪽, 아래쪽
+    //오른쪽 왼쪽 위쪽 아래쪽
 
     static int dsx[][] = {{0}, {-1, 0, 1}, {-1, 0, 1}, {-1, -1, -1}, {1, 1, 1}, };
     static int dsy[][] = {{0}, {1, 1, 1}, {-1, -1, -1}, {-1, 0, 1}, {-1, 0, 1}};
     static int dx[] = {0, 0, 0, -1, 1};
     static int dy[] = {0, 1, -1, 0, 0};
 
-    //온도 조절
     public static void tempdiv(int x, int y){
         for(int i = 1; i <= 4; i++){
             int nx = x + dx[i];
             int ny = y + dy[i];
 
-            //범위 벗어나거나 주변 값들이 더 크거나 같은 경우 컨티뉴
             if(nx < 1 || ny < 1 || nx > R || ny > C || map[x][y] <= map[nx][ny])
                 continue;
-            //벽 체크해서 벽이 있을시 컨티뉴
-            if(!wallcheck(nx, ny, i, 1)) continue;            
-
+            if(!wallcheck(nx, ny, i, 1)) continue;
             int diff = (map[x][y] - map[nx][ny]) / 4;
             tempmap[nx][ny] += diff;
             tempmap[x][y] -= diff;
@@ -41,7 +37,7 @@ public class G1온풍기안녕23289 {
 
             OnNode now = q.poll();           
             map[now.x][now.y] += now.count;
-            //한 원소마다 3개씩 늘어난다고 생각
+            //한 원소마다 3개씩
             for(int i = 0; i < 3; i++){
                 int nx = now.x + dsx[now.d][i];
                 int ny = now.y + dsy[now.d][i];
@@ -49,7 +45,6 @@ public class G1온풍기안녕23289 {
                 //경로 밖으로 나가거나 1이 되면 컨티뉴
                 if(nx < 1 || ny < 1 || nx > R || ny > C || now.count <= 1)
                     continue;
-                //벽 체크 통과하고 방문 한 적이 없을시에 값 추가
                 if(wallcheck(nx, ny, now.d, i) && !visited[nx][ny]){
                     q.add(new OnNode(nx, ny, now.d, now.count-1));
                     visited[nx][ny] = true;
@@ -59,47 +54,67 @@ public class G1온풍기안녕23289 {
     }
     public static boolean wallcheck(int x, int y, int d, int near){
         if(d == 1){// 오른쪽 방향에서 위 가운데 아래 순서
-            if(near == 0)
-                if(wallmap[x][y-1][1] == true || wallmap[x+1][y-1][0] == true)    return false;            
-            else if(near == 1)
-                if(wallmap[x][y-1][1] == true)   return false;            
-            else
-                if(wallmap[x][y-1][1] == true || wallmap[x][y-1][0] == true)   return false;            
+            if(near == 0){
+                if(wallmap[x][y-1][1] == true || wallmap[x+1][y-1][0] == true)
+                    return false;
+            }
+            else if(near == 1){
+                if(wallmap[x][y-1][1] == true)
+                    return false;
+            }
+            else{
+                if(wallmap[x][y-1][1] == true || wallmap[x][y-1][0] == true)
+                    return false;
+            }
         }
-        
-        else if(d == 2){ // 왼쪽 방향에서 위 가운데 아래 순서
-            if(near == 0)
-                if(wallmap[x][y][1] == true || wallmap[x+1][y+1][0] == true)   return false;            
-            else if(near == 1)
-                if(wallmap[x][y][1] == true)   return false;            
-            else
-                if(wallmap[x][y][1] == true || wallmap[x][y+1][0] == true)   return false;            
+        else if(d == 2){
+            if(near == 0){
+                if(wallmap[x][y][1] == true || wallmap[x+1][y+1][0] == true)
+                    return false;
+            }
+            else if(near == 1){
+                if(wallmap[x][y][1] == true)
+                    return false;
+            }
+            else{
+                if(wallmap[x][y][1] == true || wallmap[x][y+1][0] == true)
+                    return false;
+            }
         }
-        
-        else if(d == 3){ //위에서 왼쪽 가운데 오른쪽 순서
-            if(near == 0)
-                if(wallmap[x+1][y][1] == true || wallmap[x+1][y][0] == true)     return false;            
-            else if(near == 1)
-                if(wallmap[x+1][y][0] == true)    return false;            
-            else
-                if(wallmap[x+1][y-1][1] == true || wallmap[x+1][y][0] == true)    return false;            
+        //위 아래에서 왼쪽 가운데 오른쪽
+        else if(d == 3){
+            if(near == 0){
+                if(wallmap[x+1][y][1] == true || wallmap[x+1][y][0] == true)
+                    return false;
+            }
+            else if(near == 1){
+                if(wallmap[x+1][y][0] == true)
+                    return false;
+            }
+            else{
+                if(wallmap[x+1][y-1][1] == true || wallmap[x+1][y][0] == true)
+                    return false;
+            }
         }
-        
-        else{   //아래에서 왼쪽 가운데 오른쪽 순서
-            if(near == 0)
-                if(wallmap[x-1][y][1] == true || wallmap[x][y][0] == true)      return false;
-            
-            else if(near == 1)
-                if(wallmap[x][y][0] == true)    return false;
-            
-            else
-                if(wallmap[x-1][y-1][1] == true || wallmap[x][y][0] == true)    return false;            
+        else{
+            if(near == 0){
+                if(wallmap[x-1][y][1] == true || wallmap[x][y][0] == true)
+                    return false;
+            }
+            else if(near == 1){
+                if(wallmap[x][y][0] == true)
+                    return false;
+            }
+            else{
+                if(wallmap[x-1][y-1][1] == true || wallmap[x][y][0] == true)
+                    return false;
+            }
         }
 
         return true;
     }
     public static boolean hotblower(){
-        //온풍기에서 바람이 나온다
+        //바람이 분다
         for(Iterator<Node> it = list.iterator(); it.hasNext();){
             Node now = it.next();
             int d = now.t;
@@ -107,17 +122,14 @@ public class G1온풍기안녕23289 {
             int ny = now.y + dy[d];
 
             q.add(new OnNode(nx, ny, d, 5));
-            //온풍기 하나씩 처리 여러개로 하면 visited 꼬임
             blow();
                 
-            //visited 초기화
             for(int i = 1; i <= R; i++){
                 Arrays.fill(visited[i], false);
             }
         }
-        //온도 조절
+        //온도가 조절된다
         
-        //현재 온도 temp에 복사
         for(int i = 1; i <= R; i++){
             System.arraycopy(map[i], 0, tempmap[i], 0, map[i].length);
         }
@@ -130,16 +142,21 @@ public class G1온풍기안녕23289 {
         //조절한 온도 복사
         for(int i = 1; i <= R; i++){
             System.arraycopy(tempmap[i], 0, map[i], 0, map[i].length);
-        }        
+        }
+        
         //온도가 1이상인 바깥 온도가 1감소한다
 
         for(int i = 1; i <= R; i++){
-            if(map[i][1] >= 1)    map[i][1]--;
-            if(map[i][C] >= 1)    map[i][C]--;
+            if(map[i][1] >= 1)
+                map[i][1]--;
+            if(map[i][C] >= 1)
+                map[i][C]--;
         }
         for(int i = 2; i <= C-1; i++){
-            if(map[1][i] >= 1)    map[1][i]--;
-            if(map[R][i] >= 1)    map[R][i]--;
+            if(map[1][i] >= 1)
+                map[1][i]--;
+            if(map[R][i] >= 1)
+                map[R][i]--;
         }
 
         //초콜릿이 맛있다.
