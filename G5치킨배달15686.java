@@ -9,7 +9,7 @@ public class G5치킨배달15686 {
     static PriorityQueue<Integer> pq;
 
 
-    public static void check(){
+    public static void valuecheck(){
         int sum = 0;
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
@@ -30,7 +30,7 @@ public class G5치킨배달15686 {
     public static void chickendinner(int index, int depth){
         //두개를 정해서 두개 중 어느 집이 더 가까운지 Min
         if(depth == M){
-            check();
+            valuecheck();
             return;
         }
         else{

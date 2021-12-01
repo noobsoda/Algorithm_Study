@@ -131,7 +131,7 @@ public class G1온풍기안녕23289 {
         //온도가 조절된다
         
         for(int i = 1; i <= R; i++){
-            System.arraycopy(map[i], 0, tempmap[i], 0, map[i].length);
+            tempmap[i] = map[i].clone();
         }
 
         for(int i = 1; i <= R; i++){
@@ -141,7 +141,7 @@ public class G1온풍기안녕23289 {
         }
         //조절한 온도 복사
         for(int i = 1; i <= R; i++){
-            System.arraycopy(tempmap[i], 0, map[i], 0, map[i].length);
+            map[i] = tempmap[i].clone();
         }
         
         //온도가 1이상인 바깥 온도가 1감소한다
