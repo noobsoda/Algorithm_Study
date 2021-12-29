@@ -106,6 +106,7 @@ public class S1상어초등학교21608 {
             int n = it.next();
             sharkschool(n);
         }
+        //호감도 구하기
         for(int i = 0; i < N; i++){
             for(int j = 0; j < N; j++){
                 int n = 0;
@@ -125,8 +126,8 @@ public class S1상어초등학교21608 {
         }
         // for(int i = 0; i < N; i++){
         //     System.out.println(Arrays.toString(map[i]));
-        // }
-        
+        // }        
+
         System.out.println(res);
 
 
