@@ -1,6 +1,5 @@
 package java2022;
 import java.io.*;
-import java.util.*;
 
 public class S3나무자르기2805 {
     static int N, M;
