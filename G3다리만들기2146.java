@@ -120,3 +120,4 @@ public class G3다리만들기2146 {
         }
     }    
 }
+//https://www.acmicpc.net/problem/2146
