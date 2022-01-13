@@ -9,7 +9,8 @@ public class G5로봇청소기14503 {
     static int dy[] = {0, 1, 0, -1};
     
     public static void robotclean(){
-
+        //현재 위치 청소
+        map[nR][nC] = 2;
     }
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
