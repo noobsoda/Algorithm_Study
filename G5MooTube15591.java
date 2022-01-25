@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+@SuppressWarnings("unchecked")
 
 public class G5MooTube15591 {
     static int N, Q;
