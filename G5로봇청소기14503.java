@@ -30,6 +30,7 @@ public class G5로봇청소기14503 {
             else if(d == 3){
                 nx -= dx[nD]*2;
                 ny -= dy[nD]*2;
+                //테스트
 
                 if(map[nx][ny] == 1){                    
                     System.out.println(res);
