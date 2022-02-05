@@ -8,13 +8,6 @@ public class G5로봇청소기14503 {
     static int dx[] = {-1, 0, 1, 0};
     static int dy[] = {0, 1, 0, -1};
 
-    public static void print(){
-        for(int i = 0; i < N; i++){
-            System.out.println(Arrays.toString(map[i]));
-        }
-        System.out.println();
-    }
-
     public static void explore(int d){
         if(nD-1 < 0){
             nD += 4;
@@ -30,17 +23,13 @@ public class G5로봇청소기14503 {
         }
         else{
             //회전
-            if(d < 4){
+            if(d < 3){
                 explore(d+1);
             }
             //후진
-            else if(d == 4){
-                if(nD-2 < 0){
-                    nD += 4;
-                }
-                nD -= 2;
-                nx += dx[nD]*2;
-                ny += dy[nD]*2;
+            else if(d == 3){
+                nx -= dx[nD]*2;
+                ny -= dy[nD]*2;
 
                 if(map[nx][ny] == 1){                    
                     System.out.println(res);
@@ -59,8 +48,7 @@ public class G5로봇청소기14503 {
     public static boolean robotclean(){
         //현재 위치 청소
         map[nR][nC] = 2;
-        res++;
-        print();
+        res++;        
 
         int d = 0;
         explore(d);
@@ -77,8 +65,8 @@ public class G5로봇청소기14503 {
 
         st = new StringTokenizer(br.readLine());
         
-        nR = Integer.parseInt(st.nextToken())-1;
-        nC = Integer.parseInt(st.nextToken())-1;
+        nR = Integer.parseInt(st.nextToken());
+        nC = Integer.parseInt(st.nextToken());
         nD = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
