@@ -3,35 +3,93 @@ import java.util.*;
 
 public class G5로봇청소기14503 {
     static int N, M;
-    static int nR, nC, nD;
+    static int nR, nC, nD, res = 0;
     static int map[][];
     static int dx[] = {-1, 0, 1, 0};
     static int dy[] = {0, 1, 0, -1};
+
+    public static void print(){
+        for(int i = 0; i < N; i++){
+            System.out.println(Arrays.toString(map[i]));
+        }
+        System.out.println();
+    }
+
+    public static void explore(int d){
+        if(nD-1 < 0){
+            nD += 4;
+        }
+        nD -= 1;
+        int nx = nR + dx[nD];
+        int ny = nC + dy[nD];
+
+        if(map[nx][ny] == 0){
+            nR = nx;
+            nC = ny;
+            return;
+        }
+        else{
+            //회전
+            if(d < 4){
+                explore(d+1);
+            }
+            //후진
+            else if(d == 4){
+                if(nD-2 < 0){
+                    nD += 4;
+                }
+                nD -= 2;
+                nx += dx[nD]*2;
+                ny += dy[nD]*2;
+
+                if(map[nx][ny] == 1){                    
+                    System.out.println(res);
+                    System.exit(0);
+                }
+                else{
+                    nR = nx;
+                    nC = ny;
+                    explore(0);
+                }
+            }
+            
+        }
+    }
     
-    public static void robotclean(){
+    public static boolean robotclean(){
         //현재 위치 청소
         map[nR][nC] = 2;
+        res++;
+        print();
+
+        int d = 0;
+        explore(d);
+        
+        return true;
     }
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        String nv[] = br.readLine().split(" ");
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
 
-        N = Integer.parseInt(nv[0]);
-        M = Integer.parseInt(nv[1]);
 
-        nv = br.readLine().split(" ");
-        nR = Integer.parseInt(nv[0]);
-        nC = Integer.parseInt(nv[1]);
-        nD = Integer.parseInt(nv[2]);
+        st = new StringTokenizer(br.readLine());
+        
+        nR = Integer.parseInt(st.nextToken())-1;
+        nC = Integer.parseInt(st.nextToken())-1;
+        nD = Integer.parseInt(st.nextToken());
 
+        map = new int[N][M];
         for(int i = 0; i < N; i++){
-            nv = br.readLine().split(" ");
+            st = new StringTokenizer(br.readLine());
             for(int j = 0; j < M; j++){
-                map[i][j] = Integer.parseInt(nv[j]);
+                map[i][j] = Integer.parseInt(st.nextToken());
             }
         }
 
+        while(robotclean());
 
     }
 }
