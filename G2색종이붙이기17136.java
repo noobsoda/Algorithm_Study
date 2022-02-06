@@ -31,7 +31,6 @@ public class G2색종이붙이기17136 {
  
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
  
         map = new int[10][10];
@@ -48,9 +47,8 @@ public class G2색종이붙이기17136 {
             ans = -1;
         }
  
-        bw.write(ans + "\n");
-        bw.close();
-        br.close();
+        System.out.println(ans);
+        
     }
     
     public static void DFS(int x, int y, int cnt) {
@@ -83,9 +81,6 @@ public class G2색종이붙이기17136 {
         }
     }
  
-    
-    
-   
     
  
 }
