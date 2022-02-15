@@ -1,4 +1,4 @@
-package java2022;
+package 코딩테스트공부;
 import java.io.*;
 
 public class S3나무자르기2805 {
