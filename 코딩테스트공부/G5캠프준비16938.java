@@ -21,7 +21,7 @@ public class G5캠프준비16938 {
             int n = sum + map[i];
             int nmin = Math.min(min, map[i]);
             int nmax = Math.max(max, map[i]);
-            //n > R 경우 return 그 이후 크기 때문에 현재 상태의 for문 돌릴 필요 없음
+            //n > R 경우 return 정렬 했기 때문에 이후 값 크기가 더 커서, 현재 상태의 for문 돌릴 필요 없음
             
             if(n > R) return;
             dfs(i, depth+1, depthmax, n, nmin, nmax);            
