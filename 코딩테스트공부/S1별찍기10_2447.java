@@ -51,3 +51,4 @@ public class S1별찍기10_2447 {
 
 }
 //https://www.acmicpc.net/problem/2447
+
