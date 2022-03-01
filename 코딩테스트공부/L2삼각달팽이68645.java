@@ -51,3 +51,4 @@ public class L2삼각달팽이68645 {
         //대각선 삼각형으로 생각할것
     }
 }
+//https://programmers.co.kr/learn/courses/30/lessons/68645
