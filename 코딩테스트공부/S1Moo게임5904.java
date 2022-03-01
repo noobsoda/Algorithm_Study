@@ -49,3 +49,4 @@ public class S1Moo게임5904 {
 
     }    
 }
+//https://www.acmicpc.net/problem/5904
