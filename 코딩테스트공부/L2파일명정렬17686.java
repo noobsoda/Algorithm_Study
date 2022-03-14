@@ -22,17 +22,24 @@ public class L2파일명정렬17686 {
             boolean headflag = false;
             boolean numberflag = false;
             for(int j = 0; j < files[i].length(); j++){  
+                //TAIL
                 if(headflag && numberflag){
                     tail.append(files[i].charAt(j));
                 }
                 
+                //NUMBER
+                //해당 문자열에 숫자가 들어있을 때
                 if(!numberflag && Character.isDigit(files[i].charAt(j))){
                     number.append(files[i].charAt(j));
                     headflag = true;
+                    //tail이 없고 문자열의 마지막이라면
                     if(files[i].length() <= j+1)  continue;
+
+                    //다음 문자가 문자열일 때
                     if(!Character.isDigit(files[i].charAt(j+1)))
                        numberflag = true;
                 }
+                //HEAD
                 if(!headflag){
                     head.append(files[i].charAt(j));
                 }
@@ -42,6 +49,7 @@ public class L2파일명정렬17686 {
             String h = head.toString();
             String n = number.toString();
             String t = tail.toString();
+            //전부 대문자로 치환
             h = h.toUpperCase();
             list.add(new File(files[i], h, Integer.parseInt(n), t));
             
