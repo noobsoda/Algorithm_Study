@@ -1,7 +1,6 @@
 package 코딩테스트공부;
 import java.io.*;
 import java.util.*;
-@SuppressWarnings("unchecked")
 
 public class G4플로이드11404 {
     static int N, M;
