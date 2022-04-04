@@ -1,7 +1,7 @@
 package 코딩테스트공부;
 import java.io.*;
 import java.util.*;
-public class G4택배1719 {
+public class G4택배1719플로이드 {
     static int N, M;
     static int map[][];
     static int res[][];
