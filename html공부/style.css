@@ -1,0 +1,22 @@
+/*css 주석 방식*/
+*{
+    font-family: 굴림, monospace;    
+    color: blue
+}
+html{font-size: 18px;}
+h1{font-size: 2rem;}
+p{font-size: 1rem;}
+p{
+    text-align: left;
+    color: rgb(100%, 100%, 100%);
+}
+span{font-size: 2em;}
+#gagaga{color: orange;}
+
+.text{
+    color:green;
+}
+h1{
+    color: blue;    
+}
+/*클래스 선택자가 태그 선택자보다 우선순위가 높아서 .text가 더 우선*/
