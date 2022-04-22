@@ -1,7 +1,108 @@
 /*css 주석 방식*/
+/*css는 가장 마지막에 쓴것으로 덮어 씌움*/
 *{
     font-family: 굴림, monospace;    
-    color: blue
+    
+}
+p::first-line{
+    color: red;
+}
+p::first-letter{
+    color: yellow;
+}
+p::before{
+    content: "앞에다가 추가한 텍스트 요소";
+    
+}
+p::after{
+    content: "뒤에다가 추가한 텍스트 요소";
+}
+h2 > span{
+    color: darkgoldenrod;
+}
+h1 + p{
+    color:red;
+}
+li::marker{
+    color:red;
+    font-size: 20px;
+}
+input::placeholder{
+    font-size: 12px;
+    color: white;
+}
+input:focus{
+    color: black;
+    background-color: white;
+}
+input:disabled{
+    height: 100px;
+}
+[type= "button"]{
+    width: 100px; height: 30px;
+    background-color: tomato; color: white;
+    border: none; border-radius: 8px;
+}
+[type="button"]:hover{
+    background-color: blue;
+}
+[type="button"]:active{
+    background-color: black;
+}
+[class="t"]{
+    color:blue
+}
+[id]{
+    color: brown
+}
+.container{
+    display: flex;
+    width: 300px; height: 300px;
+    border: 2px solid black;
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.item{
+    width: 60px; height: 60px;
+    background-color: teal;
+}
+.self{
+    align-self: flex-end;
+}
+/*solid = 꽉찬*/
+div{
+    /*box-sizing border-box은 width, height 기준으로 크기를 맞춘다*/
+    box-sizing: border-box;
+    /*content-box는 padding과 margin을 추가 시킴*/
+    box-sizing: content-box;
+    border: 3px solid red;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    padding-left: 40px;
+    margin-top: 40px;
+    margin-right: 30px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    width: 700px; height: 400px;
+    background: url(./images/스팀프로필.png) no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    
+    position: relative;
+    top: 10px; left: 100px;
+}
+span{
+    /*span 태그는 width, height를 지정할 수 없음 하려면 display: inline-block지정 해줘야 함*/
+    font-size: 2em;
+    border-width: 5px;
+    border-style: dashed;
+    border-color: rgb(100%, 50%, 0%);
+    display: block;
+    float: left;
 }
 html{font-size: 18px;}
 h1{font-size: 2rem;}
@@ -10,13 +111,10 @@ p{
     text-align: left;
     color: rgb(100%, 100%, 100%);
 }
-span{font-size: 2em;}
 #gagaga{color: orange;}
 
 .text{
     color:green;
 }
-h1{
-    color: blue;    
-}
+
 /*클래스 선택자가 태그 선택자보다 우선순위가 높아서 .text가 더 우선*/
