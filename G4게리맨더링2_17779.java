@@ -1,13 +1,9 @@
 import java.io.*;
-import java.util.*;
 
 public class G4게리맨더링2_17779 {
     static int N;
     static int map[][];
-
-    public static void gerrymandering2(){
-        
-    }
+    
     public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
