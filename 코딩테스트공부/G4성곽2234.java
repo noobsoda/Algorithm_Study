@@ -49,19 +49,22 @@ public class G4성곽2234 {
         while(!q.isEmpty()){
             Node now = q.poll();
 
+            int bit = 8;
             for(int i = 0; i < 4; i++){
                 int nx = now.x + dx[i];
                 int ny = now.y + dy[i];
-                if(tempmap[now.x][now.y] - d[i] >= 0){
-                    tempmap[now.x][now.y] -= d[i];
+                if((tempmap[now.x][now.y] & bit) != 0){
+                    bit >>= 1;
                     continue;
                 }
+                bit >>= 1; 
                 if(visited[nx][ny])    continue;
 
                 visited[nx][ny] = true;
                 map[nx][ny] = color;
                 q.add(new Node(nx, ny));
-                cnt++;                
+                cnt++;   
+                            
             }
         }
         c[color] = cnt;
