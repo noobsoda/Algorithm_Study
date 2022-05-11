@@ -35,3 +35,4 @@ public class S1퇴사2_15486 {
 
     }
 }
+//https://www.acmicpc.net/problem/15486
