@@ -119,5 +119,4 @@ public class G4성곽2234 {
         }
     }
 }
-
 //https://www.acmicpc.net/problem/2234
