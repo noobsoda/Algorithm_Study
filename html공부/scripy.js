@@ -46,3 +46,27 @@ const sayBye = function(){
 
 console.log(sayHello());
 sayBye();
+
+const inputType = document.querySelector("#typing");
+// const inputClick = document.querySelector("#push");
+
+const handleTyping = function(){
+    console.log("타이핑 되고 있어요!");
+}
+
+inputType.onkeydown = handleTyping;
+
+// inputClick.onclick = function(){
+//     console.log("클릭되고 있어요!");
+// }
+
+const btn1 = document.getElementById("push1");
+const btn2 = document.getElementById("push2");
+const btn3 = document.getElementById("push3");
+
+const handleClick = function(event){
+    console.log(event.target);
+}
+
+//이벤트 리스너를 쓰면 이벤트를 여러개 등록할 수 있다.
+btn2.addEventListener('click', handleClick);
