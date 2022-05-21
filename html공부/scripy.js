@@ -75,11 +75,41 @@
 //     console.log(inputType.value);
 // })
 
-const form = document.querySelector("form");
+// const form = document.querySelector("form");
 
-form.addEventListener("submit", function(e){
-    //리다이렉트 방지!
-    e.preventDefault()
-    console.log(form.name.value);
-    console.log(form.town.value);
+// form.addEventListener("submit", function(e){
+//     //리다이렉트 방지!
+//     e.preventDefault()
+//     console.log(form.name.value);
+//     console.log(form.town.value);
+// })
+
+// const button = document.querySelector('button');
+
+// let interId;
+// interId = setInterval(function(){
+//     console.log("Hello")
+// }, 1000)
+// console.log(interId);
+
+// button.addEventListener('click', function(e){
+//     e.preventDefault()
+//     clearInterval(interId);
+// })
+
+const h1 = document.querySelector('h1')
+const addBtn = document.querySelector('#add')
+const removeBtn = document.querySelector('#remove')
+const toggleBtn = document.querySelector('#toggle')
+
+console.log(h1.classList)
+
+addBtn.addEventListener('click', function(){
+    h1.classList.add('text')
+})
+removeBtn.addEventListener('click', function(){
+    h1.classList.remove('text')
+})
+toggleBtn.addEventListener('click', function(){
+    h1.classList.toggle('text')
 })
