@@ -97,19 +97,34 @@
 //     clearInterval(interId);
 // })
 
-const h1 = document.querySelector('h1')
-const addBtn = document.querySelector('#add')
-const removeBtn = document.querySelector('#remove')
-const toggleBtn = document.querySelector('#toggle')
+// const h1 = document.querySelector('h1')
+// const addBtn = document.querySelector('#add')
+// const removeBtn = document.querySelector('#remove')
+// const toggleBtn = document.querySelector('#toggle')
 
-console.log(h1.classList)
+// console.log(h1.classList)
 
-addBtn.addEventListener('click', function(){
-    h1.classList.add('text')
-})
-removeBtn.addEventListener('click', function(){
-    h1.classList.remove('text')
-})
-toggleBtn.addEventListener('click', function(){
-    h1.classList.toggle('text')
-})
+// addBtn.addEventListener('click', function(){
+//     h1.classList.add('text')
+// })
+// removeBtn.addEventListener('click', function(){
+//     h1.classList.remove('text')
+// })
+// toggleBtn.addEventListener('click', function(){
+//     h1.classList.toggle('text')
+// })
+
+// const myName = "두유노"
+// console.log(myName)
+
+// localStorage.setItem("myName", myName)
+
+// const myName = localStorage.getItem("myName");
+
+// console.log(myName)
+
+localStorage.setItem("cat", "고양이")
+localStorage.setItem("dog", "강아지")
+localStorage.setItem("myName", "덮어 씌움")
+
+localStorage.clear()
