@@ -203,3 +203,5 @@ restartButton.addEventListener('click', ()=>{
 //시간 지날때마다 빠르게하기
 //웹 소켓 사용해서 멀티 플레이
 //여러개 한번에 부수면 점수 더 추가하기
+//bgm도 넣기
+//https://www.youtube.com/watch?v=1lNy2mhvLFk&t=4301s 웹 소켓도 만들기
