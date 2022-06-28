@@ -1,6 +1,6 @@
 package 코딩테스트공부;
 import java.util.*;
-
+@SuppressWarnings("unchecked")
 public class L3가장먼노드49189 {   
     static ArrayList<Integer> arr[];
     static Queue<Node> q;   
