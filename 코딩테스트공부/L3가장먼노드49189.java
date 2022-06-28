@@ -1,6 +1,4 @@
 package 코딩테스트공부;
-
-import java.io.*;
 import java.util.*;
 
 public class L3가장먼노드49189 {   
