@@ -3,7 +3,7 @@ package SSAFY제출;
 import java.util.*;
 import java.io.*;
 
-class D4미로1226
+class Solution
 {
     static Queue<Node> q;
     static boolean visited[][];
@@ -38,10 +38,13 @@ class D4미로1226
 	public static void main(String args[]) throws Exception
 	{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 				
 		for(int test_case = 1; test_case <= 10; test_case++)
 		{
-            //int T = Integer.parseInt(st.nextToken());
+            
+            st = new StringTokenizer(br.readLine());
+            int T = Integer.parseInt(st.nextToken());
 			map = new int[16][16];
             visited = new boolean[16][16];
             q = new LinkedList<>();
