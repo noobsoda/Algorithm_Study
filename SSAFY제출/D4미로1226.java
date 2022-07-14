@@ -44,7 +44,7 @@ class Solution
 		{
             
             st = new StringTokenizer(br.readLine());
-            int T = Integer.parseInt(st.nextToken());
+            st.nextToken();
 			map = new int[16][16];
             visited = new boolean[16][16];
             q = new LinkedList<>();
