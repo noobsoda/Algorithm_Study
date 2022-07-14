@@ -1,0 +1,87 @@
+div {
+
+    display:inline-block;
+
+  }
+
+
+
+
+
+
+
+
+.box1 {
+	
+	text-align:center;
+	
+	border-radius: 50px;
+
+    position:relative;
+
+    top:30pt;
+
+    left:0px;
+
+    width:800px;
+
+    height:1000px;
+
+    font-size: 15pt;
+
+    font-weight: normal;
+
+
+    
+
+
+
+}
+
+
+
+.box1 .box2 {
+
+    position:absolute;
+
+    top:100pt;
+
+    left:0px;
+
+    width:500px;
+
+    height:700px;
+
+    font-size: 15pt;
+
+    font-weight:lighter;
+
+    background-color:white;
+
+    padding:20px;
+
+    margin:20px;
+
+
+
+    
+
+}
+
+
+
+body {
+
+    text-align:center;
+
+}
+
+
+
+
+
+.image{
+
+    border-radius: 35%;
+
+}
