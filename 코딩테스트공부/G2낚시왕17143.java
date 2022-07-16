@@ -1,3 +1,4 @@
+package 코딩테스트공부;
 import java.io.*;
 import java.util.*;
 
@@ -31,7 +32,7 @@ public class G2낚시왕17143 {
             list.add(new Shark(r-1, c-1, s, d-1, z));
             map[r-1][c-1] = z;
         }
-
+        Collections.sort(list);
 
         //낚시왕 이동 i는 낚시왕
         for(int i = 0; i < C; i++){
@@ -44,53 +45,62 @@ public class G2낚시왕17143 {
                     break;
                 }
             }
+            for(Iterator<Shark> it = list.iterator(); it.hasNext();){
+                Shark shark = it.next();
+                if(map[shark.r][shark.c] == 0)
+                    it.remove();
+            }
+            for(int j = 0; j < R; j++){
+                Arrays.fill(map[j], 0);
+            }
+
 
 
             //상어 move
             for(Iterator<Shark> it = list.iterator(); it.hasNext();){
-                Shark shark = it.next();
-                if(map[shark.r][shark.c] == 0){
-                    it.remove();
-                }
+                Shark shark = it.next();                
 
                 //샤크 무브
-                shark.r += shark.r + dx[shark.d]*shark.s;
-                shark.c += shark.c + dy[shark.d]*shark.s;
+                int nows = 0;
+                if(shark.d == 0 || shark.d == 1)
+                    nows = dx[shark.d]*shark.s % ((R-1)*2);
+
+                else
+                    nows = dy[shark.d]*shark.s % ((C-1)*2);
+
+                 
+                nows = Math.abs(nows);
 
 
-                //칸 넘어갈 때
+
+                for(int j = 0; j < nows; j++){
+                    if(shark.d == 0 || shark.d == 1){
+                        if(shark.r + dx[shark.d] < 0 || shark.r + dx[shark.d] >= R)
+                            shark.d = (shark.d + 1) % 2;
+
+                        shark.r += dx[shark.d];
+
+                        
+                    }
+                    else{
+                        if(shark.c + dy[shark.d] < 0 || shark.c + dy[shark.d] >= C)
+                            if(++shark.d % 4 == 0)
+                                shark.d = 2;
+
+                        shark.c += dy[shark.d];
+                    }
+                }
+
+
+                //같은 공간에 상어 있으면 잡아먹기
+                if(map[shark.r][shark.c] > shark.z){
+                    it.remove();
+                }
+                else{
+                    map[shark.r][shark.c] = shark.z;
+                }
+
                 
-
-                //벽 부딫혔을 때
-                boolean flag = false;
-                while(shark.r < 0 || shark.c < 0 || shark.r >= R || shark.c >= C){
-                    flag = false;
-                    if(shark.r < 0){
-                        shark.r = Math.abs(shark.r);
-                        shark.d = (shark.d + 1) % 2;
-                    }
-                    else if(shark.c < 0){
-                        shark.c = Math.abs(shark.c);
-                        shark.d = (shark.d + 1) % 2;
-                    }
-                    else if(shark.r >= R){
-                        flag = true;
-                        if(++shark.d % 4 == 0)
-                            shark.d = 3;
-                    }
-                    else if(shark.c >= C){
-                        flag = true;
-                        if(++shark.d % 4 == 0)
-                            shark.d = 3;
-                    }
-
-
-                }
-                if(flag){
-                    
-                }
-
-
             }
 
 
@@ -104,7 +114,7 @@ public class G2낚시왕17143 {
 
 
     }    
-    static class Shark{
+    static class Shark implements Comparable<Shark>{
         int r,c,s,d,z;
         public Shark(int r, int c, int s, int d, int z){
             this.r = r;
@@ -113,5 +123,10 @@ public class G2낚시왕17143 {
             this.d = d;
             this.z = z;            
         }
+        @Override
+        public int compareTo(Shark o){
+            return o.z - z;
+        } 
     }
 }
+//https://www.acmicpc.net/problem/17143
