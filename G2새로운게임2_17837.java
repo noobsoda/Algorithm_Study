@@ -130,6 +130,7 @@ public class G2새로운게임2_17837 {
 
 
         
+        
     }
     static class Node{
         int x, y, d, floor;
