@@ -1,3 +1,4 @@
+package 코딩테스트공부;
 import java.io.*;
 
 public class S5크로아티아알파벳2941 {
