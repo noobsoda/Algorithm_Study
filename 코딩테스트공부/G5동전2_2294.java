@@ -28,3 +28,4 @@ public class G5동전2_2294 {
         System.out.println((map[K] == 100001) ? -1 : map[K]);
     }    
 }
+//https://www.acmicpc.net/problem/2294
