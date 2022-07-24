@@ -14,17 +14,17 @@ public class G5동전2_2294 {
         K = Integer.parseInt(st.nextToken());
         map = new int[K+1];
 
-        map[0] = 1;
+        Arrays.fill(map, 100001);
+        map[0] = 0;
         for(int i = 0; i < N; i++){
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
 
-            for(int j = 1; j <= K; j++){
-                if(j - a < 0)   continue;
-                map[j] = map[j-a] + map[j];
+            for(int j = a; j <= K; j++){                
+                map[j] = Math.min(map[j],  map[j-a] + 1);
             }
         }
 
-        System.out.println((map[K] == 0) ? -1 : 1);
+        System.out.println((map[K] == 100001) ? -1 : map[K]);
     }    
 }
