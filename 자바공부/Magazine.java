@@ -1,5 +1,6 @@
 package 자바공부;
 
+
 public class Magazine extends Book {
 	
 	// 새로 추가된 필드 접근 제한자 설정
@@ -11,17 +12,14 @@ public class Magazine extends Book {
 		super();
 	}
 
-	public Magazine(String isbn, String title, String author, String publisher, int price, String desc, String year, String month) {
+	public Magazine(String isbn, String title, String author, String publisher, int price, String desc, String year, String month, int quantity) {
 		// 부모 클래스의 생성자 호출
-		super(isbn, title, author, publisher, price, desc);
+		super(isbn, title, author, publisher, price, desc, quantity);
 		this.year = year;
 		this.month = month;
 
 	}
 
-	/*
-	 * 새로 추가된 필드들의 getter / setter 메소드를 추가해주세요.
-	 */
 	 public String getYear() {
 		return year;
 	}

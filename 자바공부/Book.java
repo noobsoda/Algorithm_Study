@@ -1,5 +1,7 @@
 package 자바공부;
-
+/**
+ * 도서 정보를 나타내는 클래스
+ */
 public class Book {
 	private String isbn;
 	private String title;
@@ -7,16 +9,19 @@ public class Book {
 	private String publisher;
 	private int price;
     private String desc;
+	private int quantity;
+
 	
 	public Book() {}
 
-	public Book(String isbn, String title, String author, String publisher, int price, String desc) {		
+	public Book(String isbn, String title, String author, String publisher, int price, String desc, int quantity) {		
 		this.isbn = isbn;
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
 		this.price = price;
         this.desc = desc;
+		this.quantity = quantity;
 	}
 
 	public String getIsbn() {
@@ -66,9 +71,19 @@ public class Book {
 		this.desc = desc;
 	}
 
+	public int getQuantity() {
+		return this.quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	};
+
 	@Override
 	public String toString() {
-		return isbn + "    |" + title + "    |" + author + "    |" + publisher + "    |" + price + "    |" + desc;
+		return "Book [author=" + author + ", desc=" + desc + ", isbn=" + isbn + ", price=" + price + ", publisher="
+				+ publisher + ", quantity=" + quantity + ", title=" + title + "]";
 	}
 	
 }
+
