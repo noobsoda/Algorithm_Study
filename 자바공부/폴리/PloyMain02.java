@@ -3,7 +3,6 @@ package 자바공부.폴리;
 public class PloyMain02 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Father f = new Father();
 		Son s = new Son();
 		Father f1 = new Son();
