@@ -1,12 +1,12 @@
 package 자바공부.비트마스킹순열;
 
-import java.util.Arrays;
-
 public class BitTest {
-    static int [] arr,sel;
+    static int N;
+    static int [] numbers,sel;
     public static void main(String[] args) {
         int i = 982323;
-        arr = new int[] {1,3,5};
+        N = 3;
+        numbers = new int[] {1,3,5};
         sel = new int[3];
 
         System.out.println(Integer.toBinaryString(i));
@@ -16,23 +16,18 @@ public class BitTest {
             System.out.println("i의 flag 번째 자리수의 값은 1입니다");
             System.out.println(i&flag);
         }
-
-        perm(0, 0);
+        GenerateSubset();
         
     }
-    public static void perm(int idx, int bit){
-        if(idx == arr.length){
-            System.out.println(Arrays.toString(sel));
-            return;
-        }   
-        
-        for(int i = 0; i < arr.length; i++){
-            if((bit & 1 << i) != 0)    continue;
-            
-            sel[idx] = arr[i];
-            perm(idx+1, bit | 1 << i);
-        }
-            
+    public static void GenerateSubset(){
+         for(int flag = 0, caseCnt = 1 << N; flag < caseCnt; flag++){
+            for(int i = 0; i < N; i++){
+                if((flag & (1 << i)) != 0){
+                    System.out.print(numbers[i] + " ");
+                }
+            }
+            System.out.println();
+         }
         
     }
 
