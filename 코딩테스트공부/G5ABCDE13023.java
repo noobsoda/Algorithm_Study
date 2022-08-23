@@ -5,6 +5,8 @@ public class G5ABCDE13023 {
     static int N, M;
     static boolean visited[];
     static ArrayList<Integer> arr[];
+    static PriorityQueue<Node> pq;
+    static int dist[];
 
     
     
@@ -31,8 +33,10 @@ public class G5ABCDE13023 {
 
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
+        dist = new int[N];
         visited = new boolean[N];
         arr = new ArrayList[N];
+        pq = new PriorityQueue<>((o1, o2) -> o1.w - o2.w);
 
         for(int i = 0; i < N; i++){
             arr[i] = new ArrayList<>();
@@ -49,23 +53,37 @@ public class G5ABCDE13023 {
 
             arr[a].add(b);
             arr[b].add(a);
-
+            dist[a]++;
+            dist[b]++;
+        }
+        for(int i = 0; i < N; i++){
+            pq.add(new Node(dist[i], i));
         }
         boolean flag = false;
-        for(int i = 0; i < N; i++){
-            visited[i] = true;
-            if(dfs(i, 1)){
-                flag = true;
-                break;
+
+       while(!pq.isEmpty()){
+            Node now = pq.poll();
+            visited[now.e] = true;
+            if(dfs(now.e, 1)){
+                flag = true;                
             }
-            visited[i] = false;
+            visited[now.e] = false;;
         }
+                
         System.out.println(flag ? 1 : 0);
 
 
 
-        //한붓그리기 5개 이상 가능?
+        //한붓그리기 5개 이상?
 
+    }
+    static class Node{
+        int w, e;
+        public Node(int w, int e){
+            this.w = w;
+            this.e = e;
+        }
     }
     
 }
+//https://www.acmicpc.net/problem/13023
