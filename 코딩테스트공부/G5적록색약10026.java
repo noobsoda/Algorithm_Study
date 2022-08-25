@@ -1,7 +1,8 @@
+package 코딩테스트공부;
 import java.io.*;
 import java.util.*;
 
-public class 적록색약_유제균 {
+public class G5적록색약10026 {
     static int N;
     static char cmap[][];
     static boolean visited1[][];
