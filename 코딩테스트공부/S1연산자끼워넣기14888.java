@@ -9,6 +9,21 @@ public class S1연산자끼워넣기14888 {
     static int map[];
     static int d[];
 
+    public static int oper(int state, int sum, int v){
+        switch(state){
+            case 0:
+                return sum+v;
+            case 1:
+                return sum-v;
+            case 2:
+                return sum*v;
+            case 3:
+                return sum/v;
+        }
+        return 0;
+
+    }
+
     public static void dfs(int depth, int sum){
         if(depth == N-1){
             cnt++;
@@ -17,21 +32,15 @@ public class S1연산자끼워넣기14888 {
             return;
         }
         
+        
         for(int i = 0; i < 4; i++){
+
+            //남은 연산자 사용하기 비어있다면 넘어감
             for(int j = 0; j < d[i]; j++){
                 d[i]--;
-                if(i == 0){
-                    dfs(depth+1, sum+map[depth+1]);
-                }
-                else if(i == 1){
-                    dfs(depth+1, sum-map[depth+1]);
-                }
-                else if(i == 2){
-                    dfs(depth+1, sum*map[depth+1]);
-                }
-                else{
-                    dfs(depth+1, sum/map[depth+1]);
-                }
+
+                dfs(depth+1, oper(i, sum, map[depth+1]));   
+
                 d[i]++;
             }
         }
