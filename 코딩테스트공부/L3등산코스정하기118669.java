@@ -2,7 +2,7 @@ package 코딩테스트공부;
 
 import java.util.*;
 @SuppressWarnings("unchecked")
-public class L4등산 {
+public class L3등산코스정하기118669 {
     static int[] answer = new int[2];
     static PriorityQueue<Node> pq;
     static ArrayList<Node> arr[];   
