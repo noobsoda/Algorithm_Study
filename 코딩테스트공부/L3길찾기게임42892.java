@@ -3,83 +3,72 @@ package 코딩테스트공부;
 import java.util.*;
 
 public class L3길찾기게임42892 {
-    static int result[][];
-    static int idx;
-
-    public static void main(String[] args) {
-        solution(new int[][] { { 5, 3 }, { 11, 5 }, { 13, 3 }, { 3, 5 }, { 6, 1 }, { 1, 3 }, { 8, 6 }, { 7, 2 },
-                { 2, 2 } });
-    }
+    static int N, idx;
+    static int[][] answer;
 
     public static int[][] solution(int[][] nodeinfo) {
-        Node[] node = new Node[nodeinfo.length];
-        for (int i = 0; i < node.length; i++) {
-            node[i] = new Node(nodeinfo[i][0], nodeinfo[i][1], i + 1, null, null);
-        }
-        Arrays.sort(node, new Comparator<Node>() {
+        N = nodeinfo.length;
+        answer = new int[2][nodeinfo.length];
 
-            @Override
-            public int compare(Node o1, Node o2) {
-                if (o1.y == o2.y)
-                    return o1.x - o2.x;
-
-                return o2.y - o1.y;
-            }
-
-        });
-
-        Node root = node[0];
-        for (int i = 1; i < node.length; i++) {
-            insertNode(root, node[i]);
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o2.y - o1.y);
+        int cnt = 1;
+        for (int edge[] : nodeinfo) {
+            pq.add(new Node(cnt++, edge[0], edge[1], null, null));
         }
 
-        result = new int[2][nodeinfo.length];
+        Node root = pq.poll();
+
+        while (!pq.isEmpty()) {
+            Node now = pq.poll();
+            insertNode(root, now);
+        }
         idx = 0;
         preorder(root);
         idx = 0;
         postorder(root);
-        System.err.println(Arrays.toString(result[0]));
-        return result;
+
+        return answer;
     }
 
-    public static void insertNode(Node parent, Node child) {
-        if (parent.x > child.x) {
-            if (parent.left == null)
-                parent.left = child;
+    public static void insertNode(Node parents, Node child) {
+        if (parents.x < child.x) {
+            if (parents.right == null)
+                parents.right = child;
             else
-                insertNode(parent.left, child);
+                insertNode(parents.right, child);
+
         } else {
-            if (parent.right == null)
-                parent.right = child;
+            if (parents.left == null)
+                parents.left = child;
             else
-                insertNode(parent.right, child);
+                insertNode(parents.left, child);
         }
     }
 
-    public static void preorder(Node root) {
-        if (root != null) {
-            result[0][idx++] = root.value;
-            preorder(root.left);
-            preorder(root.right);
-        }
+    public static void preorder(Node now) {
+        if (now == null)
+            return;
+        answer[0][idx++] = now.n;
+        preorder(now.left);
+        preorder(now.right);
     }
 
-    public static void postorder(Node root) {
-        if (root != null) {
-            postorder(root.left);
-            postorder(root.right);
-            result[1][idx++] = root.value;
-        }
+    public static void postorder(Node now) {
+        if (now == null)
+            return;
+        postorder(now.left);
+        postorder(now.right);
+        answer[1][idx++] = now.n;
     }
 
     static class Node {
+        int n, x, y;
         Node left, right;
-        int x, y, value;
 
-        public Node(int x, int y, int value, Node left, Node right) {
+        public Node(int n, int x, int y, Node left, Node right) {
+            this.n = n;
             this.x = x;
             this.y = y;
-            this.value = value;
             this.left = left;
             this.right = right;
         }
