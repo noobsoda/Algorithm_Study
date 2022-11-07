@@ -18,10 +18,11 @@ public class G4일루미네이션5547 {
     static int edy[] = { 0, -1, 0, 1, -1, -1 };
 
     // 벽에 둘러쌓여있는지 확인하기
-    public static boolean bfs(Node start, boolean flag) {
+    // state가 false면 탐색 true면 지우기
+    public static boolean bfs(Node start, boolean state) {
         boolean rflag = true;
         // 사방이 벽으로 막혀있을때 visited
-        if (flag) {
+        if (state) {
             visited[start.x][start.y] = true;
             bfsvisited[start.x][start.y] = false;
         } else {
@@ -46,12 +47,13 @@ public class G4일루미네이션5547 {
                     nx += edx[i];
                     ny += edy[i];
                 }
+                // 벽을 만졌다
                 if (nx < 0 || ny < 0 || nx >= H || ny >= W) {
                     rflag = false;
                     continue;
                 }
 
-                if (flag) {
+                if (state) {
                     if (!bfsvisited[nx][ny] || map[nx][ny] == 1)
                         continue;
                 } else {
@@ -60,7 +62,7 @@ public class G4일루미네이션5547 {
                 }
 
                 q.add(new Node(nx, ny));
-                if (flag) {
+                if (state) {
                     visited[nx][ny] = true;
                     bfsvisited[nx][ny] = false;
                 } else {
