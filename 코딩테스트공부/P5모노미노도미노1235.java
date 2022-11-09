@@ -1,9 +1,8 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class P5모노미노도미노1235 {
   static int N, score = 0;
-  static int map[][];
   static int bluemap[][];
   static int redmap[][];
   static Queue<Node> q;
@@ -11,7 +10,11 @@ public class Main {
   static int dx[][] = { { 0 }, { 0, 0 }, { 0, 1 } };
   static int dy[][] = { { 0 }, { 0, 1 }, { 0, 0 } };
 
-  public static void Print() {
+  public static void Print(Node n) {
+
+    System.out.println(n);
+
+    System.out.println();
     for (int i = 0; i < 4; i++) {
       System.out.println(Arrays.toString(bluemap[i]));
     }
@@ -23,11 +26,6 @@ public class Main {
     }
     System.out.println(redList);
     System.out.println();
-  }
-
-  public static void sort() {
-    Collections.sort(blueList, (o1, o2) -> o2.y - o1.y);
-    Collections.sort(redList, (o1, o2) -> o2.x - o1.x);
   }
 
   public static void push() {
@@ -87,7 +85,7 @@ public class Main {
 
       }
       Node now;
-      // 리스트에 있는 것들중에 2, 3번 나누기 할거 있으면 하고 삭제하고 한칸씩 떙기기
+      // 리스트에 있는 끝에 있는 것들중에 2, 3번 나누기 할거면 1로 바꿔버리고 그게 아니라면 삭제
       if (blueflag) {
         for (Iterator<Node> it = blueList.iterator(); it.hasNext();) {
           now = it.next();
@@ -117,14 +115,14 @@ public class Main {
 
         }
       }
-      // 땅에 붙어있는 쪽으로 정렬
-      sort();
 
     }
 
   }
 
-  public static void explore() {
+  public static boolean explore() {
+
+    boolean endflag = false;
 
     // 한칸 땡기는거 전면 수정
     // 리스트 나누기 블루일때 2 레드일때 3
@@ -165,6 +163,7 @@ public class Main {
         }
         bluebomb[bluecnt++] = i;
         score++;
+        endflag = true;
         bluesum = 0;
 
       }
@@ -174,6 +173,7 @@ public class Main {
         }
         redbomb[redcnt++] = i;
         score++;
+        endflag = true;
         redsum = 0;
       }
     }
@@ -182,15 +182,17 @@ public class Main {
 
     Node now = null;
 
-    if (bluebomb[1] != -1) {
+    if (bluebomb[0] != -1) {
       for (Iterator<Node> it = blueList.iterator(); it.hasNext();) {
         now = it.next();
 
         // 도형이 2이면서 머리나 다리가 짤린 경우
         if (now.t == 2) {
-          if (map[now.x][now.y + 1] == 0) {
+          if (bluemap[now.x][now.y] == 0 && bluemap[now.x][now.y + 1] == 0) {
+            it.remove();
+          } else if (bluemap[now.x][now.y + 1] == 0) {
             now.t = 1;
-          } else if (map[now.x][now.y] == 0) {
+          } else if (bluemap[now.x][now.y] == 0) {
             now.t = 1;
             now.y++;
           }
@@ -198,57 +200,60 @@ public class Main {
         }
 
         // 도형이 1이랑 3이면서 현재 본인 위치가 사라진 경우
-        else if (map[now.x][now.y] == 0) {
+        else if (bluemap[now.x][now.y] == 0) {
           it.remove();
         }
       }
     }
-    if (redbomb[1] != -1) {
+    if (redbomb[0] != -1) {
       for (Iterator<Node> it = redList.iterator(); it.hasNext();) {
         now = it.next();
 
         // 도형이 3이면서 머리나 다리가 짤린 경우
         if (now.t == 3) {
-          if (map[now.x + 1][now.y] == 0) {
+          if (redmap[now.x][now.y] == 0 && redmap[now.x + 1][now.y] == 0) {
+            it.remove();
+          } else if (redmap[now.x + 1][now.y] == 0) {
             now.t = 1;
-          } else if (map[now.x][now.y] == 0) {
+          } else if (redmap[now.x][now.y] == 0) {
             now.x++;
             now.t = 1;
           }
         }
         // 도형이 1이나 2면서 현재 본인 위치가 사라진 경우
-        else if (map[now.x][now.y] == 0) {
+        else if (redmap[now.x][now.y] == 0) {
           it.remove();
         }
       }
     }
 
-    // 땅에 붙어있는 쪽으로 정렬
-    sort();
-
     // 모노미노푸시로 인덱스보다 위 부분 다 보내기
 
     int blueindex = -1;
     int redindex = -1;
+    // 제일 높은게 터진 인덱스
     for (int i = 1; i >= 0; i--) {
       if (bluebomb[i] != -1)
         blueindex = bluebomb[i];
       if (redbomb[i] != -1)
         redindex = redbomb[i];
     }
-    // 여기까지 왔다는 말은 해야 할일이 있다
+    // 현재 터트린 블록보다 위에 있는 블록들을 내려줘야 함
     if (blueindex != -1) {
       for (Iterator<Node> it = blueList.iterator(); it.hasNext();) {
         now = it.next();
+        // 현재 터트린 위치보다 위에 있는 블록들
         if (now.y < blueindex) {
-          // 모노미노 남은거 푸시
-          monominoHavePush(now.x, now.y, now.t, 0);
           for (int i = 0; i < dx[now.t - 1].length; i++) {
-            int nx = now.x + dx[now.t][i];
-            int ny = now.y + dy[now.t][i];
+            int nx = now.x + dx[now.t - 1][i];
+            int ny = now.y + dy[now.t - 1][i];
 
-            map[nx][ny] = 0;
+            bluemap[nx][ny] = 0;
           }
+          Node temp = monominoPush(now.x, now.y, now.t, 0);
+          now.x = temp.x;
+          now.y = temp.y;
+          now.t = temp.t;
         }
       }
     }
@@ -256,259 +261,137 @@ public class Main {
       for (Iterator<Node> it = redList.iterator(); it.hasNext();) {
         now = it.next();
         if (now.x < redindex) {
-          // 모노미노 남은거 푸시
-          monominoHavePush(now.x, now.y, now.t, 1);
-          for (int i = 0; i < dx[now.t - 1].length; i++) {
-            int nx = now.x + dx[now.t][i];
-            int ny = now.y + dy[now.t][i];
 
-            map[nx][ny] = 0;
+          for (int i = 0; i < dx[now.t - 1].length; i++) {
+            int nx = now.x + dx[now.t - 1][i];
+            int ny = now.y + dy[now.t - 1][i];
+
+            redmap[nx][ny] = 0;
           }
-          it.remove();
+          // 모노미노 남은거 템프로 만들어서 푸시
+          Node temp = monominoPush(now.x, now.y, now.t, 1);
+          now.x = temp.x;
+          now.y = temp.y;
+          now.t = temp.t;
         }
       }
-    }
-    // 땅에 붙어있는 쪽으로 정렬
-    sort();
 
+    }
+
+    return endflag;
   }
 
   // state가 0이면 블루 1이면 레드
-  public static void monominoHavePush(int x, int y, int t, int state) {
+  public static Node monominoPush(int x, int y, int t, int state) {
+    Node now = null;
     // 모노미노 푸시 수정해서 남은것들 보낼수 있게 하기
-    boolean blue = false;
-    boolean red = false;
 
     if (state == 0) {
-      if (t == 1) {
-        for (int i = y; i < 5; i++) {
 
-          // 앞에 블럭이 있으면 블럭 설치
-          if ((bluemap[x][i + 1] == 1) && !blue) {
+      if (t == 1) {
+        for (int i = y; i <= 5; i++) {
+
+          // 앞에 블럭이 있거나 벽에 도달했으면 블럭 설치
+          if (i + 1 == 6 || bluemap[x][i + 1] == 1) {
             bluemap[x][i] = 1;
-            blueList.add(new Node(x, i, 1));
-            blue = true;
+            now = new Node(x, i, 1);
+            break;
           }
-          // 앞에 블럭이 없고 벽에 도달했으면 블럭 설치
-          if (i == 4 && !blue) {
-            bluemap[x][i + 1] = 1;
-            blueList.add(new Node(x, i + 1, 1));
-          }
+
         }
       } else if (t == 2) {
-        for (int i = y; i < 5; i++) {
+        for (int i = y; i <= 5; i++) {
 
-          if ((bluemap[x][i + 1] == 1) && !blue) {
+          if (i + 1 == 6 || bluemap[x][i + 1] == 1) {
             bluemap[x][i] = 1;
             bluemap[x][i - 1] = 1;
-            blueList.add(new Node(x, i, 2));
-            blue = true;
-          }
-          if (i == 4 && !blue) {
-            bluemap[x][i + 1] = 1;
-            bluemap[x][i] = 1;
-            blueList.add(new Node(x, i + 1, 2));
+            now = new Node(x, i - 1, 2);
+            break;
           }
         }
       } else {
-        for (int i = y; i < 5; i++) {
+        for (int i = y; i <= 5; i++) {
 
-          if ((bluemap[x][i + 1] == 1 || bluemap[x + 1][i + 1] == 1) && !blue) {
+          if (i + 1 == 6 || bluemap[x][i + 1] == 1 || bluemap[x + 1][i + 1] == 1) {
             bluemap[x][i] = 1;
             bluemap[x + 1][i] = 1;
-            blueList.add(new Node(x, i, 3));
-            blue = true;
-          }
-
-          if (i == 4 && !blue) {
-            bluemap[x][i + 1] = 1;
-            bluemap[x + 1][i + 1] = 1;
-            blueList.add(new Node(x, i + 1, 3));
+            now = new Node(x, i, 3);
+            break;
           }
         }
       }
     } else {
 
       if (t == 1) {
-        for (int i = x; i < 5; i++) {
+        for (int i = x; i <= 5; i++) {
 
-          if ((redmap[i + 1][y] == 1) && !red) {
+          if (i + 1 == 6 || redmap[i + 1][y] == 1) {
             redmap[i][y] = 1;
-            redList.add(new Node(i, y, 1));
-            red = true;
-          }
-
-          if (i == 4 && !red) {
-            redmap[i + 1][y] = 1;
-            redList.add(new Node(i + 1, y, 1));
+            now = new Node(i, y, 1);
+            break;
           }
         }
 
       } else if (t == 2) {
-        for (int i = x; i < 5; i++) {
-
-          if ((redmap[i + 1][y] == 1 || redmap[i + 1][y + 1] == 1) && !red) {
+        for (int i = x; i <= 5; i++) {
+          if (i + 1 == 6 || redmap[i + 1][y] == 1 || redmap[i + 1][y + 1] == 1) {
             redmap[i][y] = 1;
             redmap[i][y + 1] = 1;
-            redList.add(new Node(i, y, 2));
-            red = true;
-          }
-          if (i == 4 && !red) {
-            redmap[i + 1][y] = 1;
-            redmap[i + 1][y + 1] = 1;
-            redList.add(new Node(i + 1, y, 2));
+            now = new Node(i, y, 2);
+            break;
           }
         }
       } else {
-        for (int i = x; i < 5; i++) {
+        for (int i = x; i <= 5; i++) {
 
-          if (redmap[i + 1][y] == 1 && !red) {
+          if (i + 1 == 6 || redmap[i + 1][y] == 1) {
             redmap[i][y] = 1;
             redmap[i - 1][y] = 1;
-            red = true;
-            redList.add(new Node(i, y, 3));
-          }
-          if (i == 4 && !red) {
-            redmap[i + 1][y] = 1;
-            redmap[i][y] = 1;
-            redList.add(new Node(i + 1, y, 3));
+            now = new Node(i - 1, y, 3);
+            break;
           }
         }
       }
     }
-  }
-
-  public static void monominopush(int x, int y, int t) {
-
-    // 모노미노 푸시 수정해서 남은것들 보낼수 있게 하기
-    boolean blue = false;
-    boolean red = false;
-
-    if (t == 1) {
-      for (int i = 1; i < 5; i++) {
-
-        // 앞에 블럭이 있으면 블럭 설치
-        if ((bluemap[x][i + 1] == 1) && !blue) {
-          bluemap[x][i] = 1;
-          blueList.add(new Node(x, i, 1));
-          blue = true;
-        }
-        // 앞에 블럭이 없고 벽에 도달했으면 블럭 설치
-        if (i == 4 && !blue) {
-          bluemap[x][i + 1] = 1;
-          blueList.add(new Node(x, i + 1, 1));
-        }
-
-        if ((redmap[i + 1][y] == 1) && !red) {
-          redmap[i][y] = 1;
-          redList.add(new Node(i, y, 1));
-          red = true;
-        }
-
-        if (i == 4 && !red) {
-          redmap[i + 1][y] = 1;
-          redList.add(new Node(i + 1, y, 1));
-        }
-      }
-
-    } else if (t == 2) {
-      for (int i = 1; i < 5; i++) {
-
-        if ((bluemap[x][i + 1] == 1) && !blue) {
-          bluemap[x][i] = 1;
-          bluemap[x][i - 1] = 1;
-          blueList.add(new Node(x, i, 2));
-          blue = true;
-        }
-        if (i == 4 && !blue) {
-          bluemap[x][i + 1] = 1;
-          bluemap[x][i] = 1;
-          blueList.add(new Node(x, i + 1, 2));
-        }
-
-        if ((redmap[i + 1][y] == 1 || redmap[i + 1][y + 1] == 1) && !red) {
-          redmap[i][y] = 1;
-          redmap[i][y + 1] = 1;
-          redList.add(new Node(i, y, 2));
-          red = true;
-        }
-        if (i == 4 && !red) {
-          redmap[i + 1][y] = 1;
-          redmap[i + 1][y + 1] = 1;
-          redList.add(new Node(i + 1, y, 2));
-        }
-      }
-    } else {
-      for (int i = 1; i < 5; i++) {
-
-        if ((bluemap[x][i + 1] == 1 || bluemap[x + 1][i + 1] == 1) && !blue) {
-          bluemap[x][i] = 1;
-          bluemap[x + 1][i] = 1;
-          blueList.add(new Node(x, i, 3));
-          blue = true;
-        }
-
-        if (i == 4 && !blue) {
-          bluemap[x][i + 1] = 1;
-          bluemap[x + 1][i + 1] = 1;
-          blueList.add(new Node(x, i + 1, 3));
-        }
-
-        if (redmap[i + 1][y] == 1 && !red) {
-          redmap[i][y] = 1;
-          redmap[i - 1][y] = 1;
-          red = true;
-          redList.add(new Node(i, y, 3));
-        }
-        if (i == 4 && !red) {
-          redmap[i + 1][y] = 1;
-          redmap[i][y] = 1;
-          redList.add(new Node(i + 1, y, 3));
-        }
-      }
-    }
+    return now;
   }
 
   public static void monominodomino() {
     while (!q.isEmpty()) {
       Node now = q.poll();
       // T만큼 보내기
-      monominopush(now.x, now.y, now.t);
+      blueList.add(monominoPush(now.x, 1, now.t, 0));
+      redList.add(monominoPush(1, now.y, now.t, 1));
 
       // 점수획득 탐색 및 제거
-      explore();
+      while (explore()) {
+
+      }
 
       // 연한 타일에 있으면 끝 부분제거하고 땡기기
       push();
 
+      // Print(now);
     }
   }
 
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    StringTokenizer st = new StringTokenizer(br.readLine());
 
-    N = Integer.parseInt(br.readLine());
-    map = new int[4][4];
+    N = Integer.parseInt(st.nextToken());
     bluemap = new int[4][6];
     redmap = new int[6][4];
     redList = new ArrayList<>();
     blueList = new ArrayList<>();
 
-    for (int i = 0; i < 6; i++) {
-      if (i < 4) {
-        Arrays.fill(map[i], 0);
-        Arrays.fill(bluemap[i], 0);
-      }
-      Arrays.fill(redmap[i], 0);
-    }
     q = new ArrayDeque<>();
-    String nv[];
 
     for (int i = 0; i < N; i++) {
-      nv = br.readLine().split(" ");
-      int t = Integer.parseInt(nv[0]);
-      int x = Integer.parseInt(nv[1]);
-      int y = Integer.parseInt(nv[2]);
+      st = new StringTokenizer(br.readLine());
+      int t = Integer.parseInt(st.nextToken());
+      int x = Integer.parseInt(st.nextToken());
+      int y = Integer.parseInt(st.nextToken());
 
       q.add(new Node(x, y, t));
     }
@@ -529,8 +412,6 @@ public class Main {
     System.out.println(score);
     System.out.println(cnt);
 
-    Print();
-
   }
 
   static class Node {
@@ -550,4 +431,4 @@ public class Main {
   }
 }
 
-// https://www.acmicpc.net/problem/20061
+// https://www.acmicpc.net/problem/19235
