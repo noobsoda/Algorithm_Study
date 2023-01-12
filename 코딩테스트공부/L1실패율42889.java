@@ -5,7 +5,12 @@ import java.util.*;
 class L1실패율42889 {
     public int[] solution(int N, int[] stages) {
         int[] answer = new int[N];
-        PriorityQueue<Node> pq = new PriorityQueue<>();
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> {
+            if (o1.failrate == o2.failrate) {
+                return o1.n - o2.n;
+            }
+            return Double.compare(o2.failrate, o1.failrate);
+        });
 
         for (int i = 1; i <= N; i++) {
             double fail = 0;
@@ -34,7 +39,7 @@ class L1실패율42889 {
         return answer;
     }
 
-    static class Node implements Comparable<Node> {
+    static class Node {
         int n;
         double failrate;
 
@@ -43,11 +48,5 @@ class L1실패율42889 {
             this.failrate = failrate;
         }
 
-        public int compareTo(Node o) {
-            if (this.failrate == o.failrate) {
-                return this.n - o.n;
-            }
-            return Double.compare(o.failrate, this.failrate);
-        }
     }
 }

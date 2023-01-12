@@ -11,7 +11,8 @@ public class L3표편집81303 {
         int pre[] = new int[n];
         int next[] = new int[n];
         Stack<Node> stack = new Stack<>();
-        StringBuilder sb = new StringBuilder("O".repeat(n));
+        //StringBuilder sb = new StringBuilder("O".repeat(n));
+        StringBuilder sb = new StringBuilder("O");
         
         for(int i = 0; i < n; i++){
             pre[i] = i-1;
