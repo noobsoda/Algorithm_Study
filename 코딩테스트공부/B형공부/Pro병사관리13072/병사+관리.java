@@ -1,3 +1,5 @@
+package 코딩테스트공부.B형공부.Pro병사관리13072;
+
 // author: 류호석(rhs0266)
 
 class UserSolution {

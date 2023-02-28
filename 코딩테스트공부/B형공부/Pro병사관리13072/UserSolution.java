@@ -35,7 +35,7 @@ class UserSolution {
 
     public int bestSoldier(int mTeam) {
 
-        return teamPQ[mTeam].peek().mid;
+        return 0;
 
     }
 
