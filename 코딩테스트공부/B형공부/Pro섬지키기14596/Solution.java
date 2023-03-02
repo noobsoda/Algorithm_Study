@@ -58,6 +58,7 @@ class Solution {
                     userAns = usersolution.maxArea(M, mStructure, mSeaLevel);
                     ans = Integer.parseInt(st.nextToken());
                     if (userAns != ans) {
+                        System.out.println(userAns);
                         isCorrect = false;
                     }
                     break;
