@@ -57,7 +57,7 @@ class UserSolution {
 
     public void updateSoldier(int mID, int mScore) {
         Node node = getNode(mID, version[mID]++);
-        team[mScore].tail[mScore].nxt = node;
+        team[teamNum[mID]].tail[mScore].nxt = node;
     }
 
     public void updateTeam(int mTeam, int mChangeScore) {
