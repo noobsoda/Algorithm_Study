@@ -20,78 +20,75 @@ public class Softeer_업무처리1256 {
 
         leftQ = new ArrayDeque<>();
         rightQ = new ArrayDeque<>();
-        st = new StringTokenizer(br.readLine());
-        while (st.hasMoreTokens()) {
-            leftQ.offer(Integer.parseInt(st.nextToken()));
+
+        for (int i = 0; i < Math.pow(2, H) / 2; i++) {
+            st = new StringTokenizer(br.readLine());
+            while (st.hasMoreTokens()) {
+                leftQ.offer(Integer.parseInt(st.nextToken()));
+            }
+            st = new StringTokenizer(br.readLine());
+            while (st.hasMoreTokens()) {
+                rightQ.offer(Integer.parseInt(st.nextToken()));
+            }
         }
-        st = new StringTokenizer(br.readLine());
-        while (st.hasMoreTokens()) {
-            rightQ.offer(Integer.parseInt(st.nextToken()));
-        }
-        Node head = new Node();
+        Node head = new Node(0, null);
 
         init(head, 0);
         while (!leftQ.isEmpty() || !rightQ.isEmpty()) {
             postInit(head, 0, -1);
         }
         for (int i = 1; i <= R; i++) {
-            postOrder(head, 0, i % 2);
+            postOrder(head, i % 2, 0, 0);
+            if (!head.q.isEmpty())
+                res += head.q.poll();
         }
         System.out.println(res);
 
     }
 
-    public static void postOrder(Node node, int h, int state) {
-        if (h >= H) {
+    public static void postOrder(Node node, int state, int state2, int h) {
+        if (h > H) {
             return;
         }
-        // 부장!!
-        if (h == 0) {
-            if (state == LEFT) {
-                if (!node.leftQ.isEmpty()) {
-                    res += node.leftQ.poll();
-                }
-            } else {
-                if (!node.rightQ.isEmpty()) {
-                    res += node.rightQ.poll();
-                }
-            }
-        }
-        // 중간 AND 말단
+        // 왼쪽 오른쪽 선택해서 q에 넣고 위로 올리기
         if (state == LEFT) {
-            // 왼쪽의 왼쪽
-            if (!node.left.leftQ.isEmpty()) {
-                node.leftQ.offer(node.left.leftQ.poll());
-            }
-            // 오른쪽의 왼쪽
-            if (!node.right.leftQ.isEmpty()) {
-                node.rightQ.offer(node.right.leftQ.poll());
+            if (!node.leftQ.isEmpty()) {
+                node.q.offer(node.leftQ.poll());
             }
         } else {
-            // 왼쪽의 오른쪽
-            if (!node.left.rightQ.isEmpty()) {
-                node.leftQ.offer(node.left.rightQ.poll());
+            if (!node.rightQ.isEmpty()) {
+                node.q.offer(node.rightQ.poll());
             }
-            // 오른쪽의 오른쪽
-            if (!node.right.rightQ.isEmpty()) {
-                node.rightQ.offer(node.right.rightQ.poll());
+        }
+        if (h == 0) {
+            if (!node.q.isEmpty())
+                res += node.q.poll();
+        } else {
+            if (state2 == LEFT) {
+                if (!node.q.isEmpty()) {
+                    node.up.leftQ.add(node.q.poll());
+                }
+            } else {
+                if (!node.q.isEmpty()) {
+                    node.up.rightQ.add(node.q.poll());
+                }
             }
         }
 
-        postOrder(node.left, h + 1, state);
-        postOrder(node.right, h + 1, state);
+        postOrder(node.left, state, LEFT, h + 1);
+        postOrder(node.right, state, RIGHT, h + 1);
 
     }
 
     public static void postInit(Node node, int h, int state) {
         if (node.left == null || node.right == null) {
             if (state == LEFT) {
-                if (!leftQ.isEmpty()) {
-                    node.leftQ.add(leftQ.poll());
+                for (int i = 0; i < K; i++) {
+                    node.q.add(leftQ.poll());
                 }
             } else if (state == RIGHT) {
-                if (!rightQ.isEmpty()) {
-                    node.leftQ.add(rightQ.poll());
+                for (int i = 0; i < K; i++) {
+                    node.q.add(rightQ.poll());
                 }
             }
 
@@ -108,12 +105,12 @@ public class Softeer_업무처리1256 {
             return;
         }
         if (node.left == null) {
-            node.left = new Node();
+            node.left = new Node(h + 1, node);
         }
         init(node.left, h + 1);
 
         if (node.right == null) {
-            node.right = new Node();
+            node.right = new Node(h + 1, node);
         }
         init(node.right, h + 1);
 
@@ -121,16 +118,19 @@ public class Softeer_업무처리1256 {
 
     static class Node {
         int v;
-        Node left, right;
+        Node left, right, up;
         Queue<Integer> leftQ;
         Queue<Integer> rightQ;
+        Queue<Integer> q;
 
-        public Node() {
-            this.v = 0;
+        public Node(int v, Node up) {
+            this.v = v;
             this.leftQ = new ArrayDeque<>();
             this.rightQ = new ArrayDeque<>();
+            this.q = new ArrayDeque<>();
             this.left = null;
             this.right = null;
+            this.up = up;
         }
 
     }
