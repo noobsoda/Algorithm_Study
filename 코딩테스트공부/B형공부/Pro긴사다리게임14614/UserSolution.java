@@ -6,8 +6,7 @@ import java.util.*;
 public class UserSolution {
     public static void main(String[] args) {
         init();
-        System.out.println(treeMap[0].get(0).idx);
-        System.out.println(treeMap[0].get(0).nxt.idx);
+        add(4, 1);
 
     }
 
@@ -20,7 +19,7 @@ public class UserSolution {
             Node startNode = new Node(i);
             Node endNode = new Node(-1);
             treeMap[i].put(0, startNode);
-            treeMap[i].put(1000000000, startNode);
+            treeMap[i].put(1000000000, endNode);
             link(startNode, endNode);
         }
     }
@@ -30,7 +29,15 @@ public class UserSolution {
         nxt.prev = prev;
     }
 
-    public void add(int mX, int mY) {
+    public static void add(int mX, int mY) {
+        int leftKey = treeMap[mX].floorKey(mY);
+        int rightkey = treeMap[mX + 1].floorKey(mY);
+
+        Node lNode = new Node(treeMap[mX].get(rightkey).idx);
+        Node rNode = new Node(treeMap[mX].get(leftKey).idx);
+
+        treeMap[mX].put(mY, new Node(treeMap[mX].get(rightkey).idx));
+        treeMap[mX + 1].put(mY, new Node(treeMap[mX].get(leftKey).idx));
     }
 
     public void remove(int mX, int mY) {
