@@ -8,6 +8,8 @@ public class UserSolution {
         init();
         add(4, 1);
 
+        treeMap[4].get(args);
+
     }
 
     static int N = 100;
@@ -33,11 +35,17 @@ public class UserSolution {
         int leftKey = treeMap[mX].floorKey(mY);
         int rightkey = treeMap[mX + 1].floorKey(mY);
 
-        Node lNode = new Node(treeMap[mX].get(rightkey).idx);
-        Node rNode = new Node(treeMap[mX].get(leftKey).idx);
+        Node lNode = new Node(treeMap[mX].get(leftKey).idx);
+        Node rNode = new Node(treeMap[mX].get(rightkey).idx);
 
-        treeMap[mX].put(mY, new Node(treeMap[mX].get(rightkey).idx));
-        treeMap[mX + 1].put(mY, new Node(treeMap[mX].get(leftKey).idx));
+        treeMap[mX].put(mY, lNode);
+        treeMap[mX + 1].put(mY, rNode);
+
+        Node upRNode = treeMap[mX + 1].get(rightkey);
+        Node upLNode = treeMap[mX].get(leftKey);
+
+        link(lNode, upRNode);
+        link(rNode, upLNode);
     }
 
     public void remove(int mX, int mY) {
