@@ -6,10 +6,11 @@ import java.util.*;
 public class UserSolution {
     public static void main(String[] args) {
         init();
-        add(4, 1);
 
-        treeMap[4].get(args);
+        add(6, 97);
 
+        add(7, 47);
+        System.out.println(numberOfCross(7));
     }
 
     static int N = 100;
@@ -32,31 +33,67 @@ public class UserSolution {
     }
 
     public static void add(int mX, int mY) {
-        int leftKey = treeMap[mX].floorKey(mY);
-        int rightkey = treeMap[mX + 1].floorKey(mY);
+        int leftUpKey = treeMap[mX].floorKey(mY);
+        int rightUpkey = treeMap[mX + 1].floorKey(mY);
 
-        Node lNode = new Node(treeMap[mX].get(leftKey).idx);
-        Node rNode = new Node(treeMap[mX].get(rightkey).idx);
+        int leftDownKey = treeMap[mX].ceilingKey(mY);
+        int rightDownKey = treeMap[mX + 1].ceilingKey(mY);
+
+        Node lNode = new Node(treeMap[mX].get(leftUpKey).idx);
+        Node rNode = new Node(treeMap[mX + 1].get(rightUpkey).idx);
 
         treeMap[mX].put(mY, lNode);
         treeMap[mX + 1].put(mY, rNode);
 
-        Node upRNode = treeMap[mX + 1].get(rightkey);
-        Node upLNode = treeMap[mX].get(leftKey);
+        Node upLNode = treeMap[mX].get(leftUpKey);
+        Node upRNode = treeMap[mX + 1].get(rightUpkey);
 
-        link(lNode, upRNode);
-        link(rNode, upLNode);
+        Node downLNode = treeMap[mX].get(leftDownKey);
+        Node downRNode = treeMap[mX + 1].get(rightDownKey);
+
+        // 위 연결
+        link(upRNode, lNode);
+        link(upLNode, rNode);
+
+        // 아래 연결
+        link(lNode, downRNode);
+        link(rNode, downLNode);
     }
 
-    public void remove(int mX, int mY) {
+    public static void remove(int mX, int mY) {
+
+        Node downLNode = treeMap[mX].remove(mY);
+        Node downRNode = treeMap[mX + 1].remove(mY);
+
+        int leftUpKey = treeMap[mX].lowerKey(mY);
+        int rightUpkey = treeMap[mX + 1].lowerKey(mY);
+
+        Node upLNode = treeMap[mX].get(leftUpKey);
+        Node upRNode = treeMap[mX + 1].get(rightUpkey);
+
+        // 연결
+        link(upRNode, downRNode.nxt);
+        link(upLNode, downLNode.nxt);
+
     }
 
-    public int numberOfCross(int mID) {
-        return 0;
+    public static int numberOfCross(int mID) {
+        int cnt = 0;
+        Node node = treeMap[mID].get(0);
+        while (node.nxt.idx != -1) {
+            cnt++;
+            node = node.nxt;
+        }
+        return cnt;
     }
 
-    public int participant(int mX, int mY) {
-        return 0;
+    public static int participant(int mX, int mY) {
+        int key = treeMap[mX].floorKey(mY);
+        Node node = treeMap[mX].get(key);
+        while (node.prev != null) {
+            node = node.prev;
+        }
+        return node.idx;
     }
 
     static class Node {
