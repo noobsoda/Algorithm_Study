@@ -4,14 +4,14 @@ import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class UserSolution {
-    public static void main(String[] args) {
-        init();
+    // public static void main(String[] args) {
+    // init();
 
-        add(6, 97);
+    // add(6, 97);
 
-        add(7, 47);
-        System.out.println(numberOfCross(7));
-    }
+    // add(7, 47);
+    // System.out.println(numberOfCross(7));
+    // }
 
     static int N = 100;
     static TreeMap<Integer, Node> treeMap[] = new TreeMap[N + 1];
@@ -36,9 +36,6 @@ public class UserSolution {
         int leftUpKey = treeMap[mX].floorKey(mY);
         int rightUpkey = treeMap[mX + 1].floorKey(mY);
 
-        int leftDownKey = treeMap[mX].ceilingKey(mY);
-        int rightDownKey = treeMap[mX + 1].ceilingKey(mY);
-
         Node lNode = new Node(treeMap[mX].get(leftUpKey).idx);
         Node rNode = new Node(treeMap[mX + 1].get(rightUpkey).idx);
 
@@ -48,16 +45,16 @@ public class UserSolution {
         Node upLNode = treeMap[mX].get(leftUpKey);
         Node upRNode = treeMap[mX + 1].get(rightUpkey);
 
-        Node downLNode = treeMap[mX].get(leftDownKey);
-        Node downRNode = treeMap[mX + 1].get(rightDownKey);
+        Node downLNode = upLNode.nxt;
+        Node downRNode = upRNode.nxt;
 
         // 위 연결
         link(upRNode, lNode);
         link(upLNode, rNode);
 
         // 아래 연결
-        link(lNode, downRNode);
-        link(rNode, downLNode);
+        link(lNode, downLNode);
+        link(rNode, downRNode);
     }
 
     public static void remove(int mX, int mY) {
