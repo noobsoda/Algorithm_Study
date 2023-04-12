@@ -15,7 +15,7 @@ class UserSolution {
     static int originCnt;
     static int copyCnt;
 
-    public static void init() {
+    public void init() {
         originCnt = 0;
         copyCnt = 11;
         nameMap = new HashMap<>();
@@ -30,7 +30,7 @@ class UserSolution {
 
     }
 
-    public static void makeList(char mName[], int mLength, int mListValue[]) {
+    public void makeList(char mName[], int mLength, int mListValue[]) {
         StringBuilder sb = new StringBuilder();
         for (char c : mName) {
             if (c == '\0')
@@ -42,16 +42,16 @@ class UserSolution {
 
     }
 
-    public static void copyList(char mDest[], char mSrc[], boolean mCopy) {
+    public void copyList(char mDest[], char mSrc[], boolean mCopy) {
         // 연결시켜두기 mCopy가 true면 값복사이므로 nxt만 추가 false면 pre도 추가해서 양방향 추가
     }
 
-    public static void updateElement(char mName[], int mIndex, int mValue) {
+    public void updateElement(char mName[], int mIndex, int mValue) {
         // 빅오 1
         // 마지막 함수 nxt에서 마지막만 업데이트
     }
 
-    public static int element(char mName[], int mIndex) {
+    public int element(char mName[], int mIndex) {
         // 조회할 때 nxt 쭉 따라가다가 pre로 연결 안되있으면 stop 거기가 연결되어 있는것
         return 0;
     }

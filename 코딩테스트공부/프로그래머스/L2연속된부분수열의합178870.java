@@ -1,8 +1,5 @@
 package 코딩테스트공부.프로그래머스;
 
-import java.io.*;
-import java.util.*;
-
 class Solution {
     public int[] solution(int[] sequence, int k) {
         int[] answer = new int[2];
