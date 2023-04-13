@@ -16,7 +16,7 @@ public class UserSolution {
     static int N = 100;
     static TreeMap<Integer, Node> treeMap[] = new TreeMap[N + 1];
 
-    public static void init() {
+    public void init() {
         for (int i = 0; i <= N; i++) {
             treeMap[i] = new TreeMap<>();
             Node startNode = new Node(i);
@@ -27,12 +27,12 @@ public class UserSolution {
         }
     }
 
-    public static void link(Node prev, Node nxt) {
+    public void link(Node prev, Node nxt) {
         prev.nxt = nxt;
         nxt.prev = prev;
     }
 
-    public static void add(int mX, int mY) {
+    public void add(int mX, int mY) {
         int leftUpKey = treeMap[mX].floorKey(mY);
         int rightUpkey = treeMap[mX + 1].floorKey(mY);
 
@@ -57,7 +57,7 @@ public class UserSolution {
         link(rNode, downRNode);
     }
 
-    public static void remove(int mX, int mY) {
+    public void remove(int mX, int mY) {
 
         Node downLNode = treeMap[mX].remove(mY);
         Node downRNode = treeMap[mX + 1].remove(mY);
@@ -74,7 +74,7 @@ public class UserSolution {
 
     }
 
-    public static int numberOfCross(int mID) {
+    public int numberOfCross(int mID) {
         int cnt = 0;
         Node node = treeMap[mID].get(0);
         while (node.nxt.idx != -1) {
@@ -84,7 +84,7 @@ public class UserSolution {
         return cnt;
     }
 
-    public static int participant(int mX, int mY) {
+    public int participant(int mX, int mY) {
         int key = treeMap[mX].floorKey(mY);
         Node node = treeMap[mX].get(key);
         while (node.prev != null) {
