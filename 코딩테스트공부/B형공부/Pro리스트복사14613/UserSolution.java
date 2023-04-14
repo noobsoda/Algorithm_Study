@@ -71,7 +71,7 @@ class UserSolution {
 
     public static void updateElement(char mName[], int mIndex, int mValue) {
         // 주소로 연결된 마지막 nxt에서 마지막만 업데이트
-        int mNameCnt = nameMap.get(makeName(mName));
+        // int mNameCnt = nameMap.get(makeName(mName));
     }
 
     public static int element(char mName[], int mIndex) {
