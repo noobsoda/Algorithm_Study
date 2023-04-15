@@ -14,7 +14,7 @@ class UserSolution {
 
     static Node node[];
 
-    public static void init() {
+    public void init() {
         node = new Node[110000];
         initCnt = 1;
         changeCnt = 1;
@@ -26,7 +26,7 @@ class UserSolution {
 
     }
 
-    public static String makeName(char mName[]) {
+    public String makeName(char mName[]) {
         StringBuilder sb = new StringBuilder();
         for (char c : mName) {
             if (c == '\0')
@@ -37,7 +37,7 @@ class UserSolution {
 
     }
 
-    public static void makeList(char _mName[], int mLength, int mListValue[]) {
+    public void makeList(char _mName[], int mLength, int mListValue[]) {
 
         String mName = makeName(_mName);
         nameMap.put(mName, addressCnt);
@@ -52,7 +52,7 @@ class UserSolution {
 
     }
 
-    public static void copyList(char mDest[], char mSrc[], boolean mCopy) {
+    public void copyList(char mDest[], char mSrc[], boolean mCopy) {
         String mSrcName = makeName(mSrc);
         String mDestName = makeName(mDest);
         if (mCopy) {
@@ -69,12 +69,12 @@ class UserSolution {
         }
     }
 
-    public static void updateElement(char mName[], int mIndex, int mValue) {
+    public void updateElement(char mName[], int mIndex, int mValue) {
         // 주소로 연결된 마지막 nxt에서 마지막만 업데이트
         // int mNameCnt = nameMap.get(makeName(mName));
     }
 
-    public static int element(char mName[], int mIndex) {
+    public int element(char mName[], int mIndex) {
         // 조회할 때 nxt 쭉 따라가다가 pre로 연결 안되있으면 stop 거기가 연결되어 있는것
 
         return 0;

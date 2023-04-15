@@ -1,4 +1,4 @@
-package 코딩테스트공부;
+package 코딩테스트공부.코드트리;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,6 +40,8 @@ public class G2코드트리빵 {
 
             simul();
 
+            bfs(0, 0);
+
         }
 
     }
@@ -50,7 +52,7 @@ public class G2코드트리빵 {
             Arrays.fill(visited[i], false);
         }
         Queue<Node> q = new ArrayDeque<>();
-        
+
         q.add(new Node(x, y, 0));
         while (!q.isEmpty()) {
             Node node = q.poll();
@@ -62,10 +64,10 @@ public class G2코드트리빵 {
                 if (nx < 0 || ny < 0 || nx >= N || ny >= N || visited[nx][ny] || map[nx][ny] == -1)
                     continue;
 
-                if(map[nx][ny] == 1){
-                    
+                if (map[nx][ny] == 1) {
+
                 }
-                q.add(new Node(nx, ny, node.w+1));
+                q.add(new Node(nx, ny, node.w + 1));
                 visited[nx][ny] = true;
 
             }
