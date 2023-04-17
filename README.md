@@ -12,3 +12,4 @@ Algorithm-Study 파일 정리
 |2023.04.14|코테|해시|X|X|O주식종목 맞추기|[정답코드](/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8%EA%B3%B5%EB%B6%80/%EC%BD%94%ED%85%8C/O%EC%A3%BC%EC%8B%9D%EC%A2%85%EB%AA%A9%EB%A7%9E%EC%B6%94%EA%B8%B0.java)|
 |2023.04.14|코테|해시 + BFS|X|X|O바이러스 검사|[정답코드](/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8%EA%B3%B5%EB%B6%80/%EC%BD%94%ED%85%8C/O%EB%B0%94%EC%9D%B4%EB%9F%AC%EC%8A%A4%EA%B2%80%EC%82%AC.java)|
 | 2023.04.15| 백준 |DP | 1464 | S3 | [1로 만들기](https://www.acmicpc.net/problem/1463) | [정답 코드](/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8%EA%B3%B5%EB%B6%80/%EB%B0%B1%EC%A4%80/S31%EB%A1%9C%EB%A7%8C%EB%93%A4%EA%B8%B01463.java)|
+|2023.04.17|백준|DP|9095|S3|[1, 2, 3더하기](https://www.acmicpc.net/problem/9095)|[정답 코드](/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8%EA%B3%B5%EB%B6%80/%EB%B0%B1%EC%A4%80/S3_1_2_3%EB%8D%94%ED%95%98%EA%B8%B09095.java)
