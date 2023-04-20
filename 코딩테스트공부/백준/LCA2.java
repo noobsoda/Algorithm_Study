@@ -1,9 +1,10 @@
-package 코딩테스트공부;
+package 코딩테스트공부.백준;
 
 import java.io.*;
 import java.util.*;
 
-public class LCA {
+@SuppressWarnings("unchecked")
+public class LCA2 {
     private static int N, M, K;
     private static int[] depth;
     private static int[][] parent;
