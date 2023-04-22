@@ -21,8 +21,6 @@ public class S3구간합구하기4_11659 {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             map[i + 1] = Integer.parseInt(st.nextToken());
-        }
-        for (int i = 0; i < N; i++) {
             map[i + 1] += map[i];
         }
 
@@ -36,3 +34,4 @@ public class S3구간합구하기4_11659 {
 
     }
 }
+// https://www.acmicpc.net/problem/11659
