@@ -23,6 +23,7 @@ public class G5LCS9251 {
                 }
             }
         }
+        sc.close();
 
         System.out.println(dp[m][n]);
     }
