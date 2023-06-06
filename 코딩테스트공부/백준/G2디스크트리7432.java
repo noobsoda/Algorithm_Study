@@ -18,38 +18,23 @@ public class G2디스크트리7432 {
             int size = st.countTokens();
             TrieNode nowNode = rootNode;
             for (int j = 0; j < size; j++) {
-                String nowString = st.nextToken();
-                if (j + 1 == size) {
-                    // 중복되는 폴더가 없는 경우 마지막이라고 저장
-                    if (!nowNode.childNodes.containsKey(nowString)) {
-                        nowNode.childNodes.put(nowString, new TrieNode(true));
-                    }
-                } else {
-                    // 중복되는 폴더가 없는 경우만 저장
-                    if (!nowNode.childNodes.containsKey(nowString)) {
-                        nowNode.childNodes.put(nowString, new TrieNode(false));
-                    }
-                    nowNode = nowNode.childNodes.get(nowString);
-                    nowNode.isLastChar = false;
-                }
+                nowNode = nowNode.addChild(st.nextToken());
             }
         }
-        nodePrint(0, rootNode, bw);
+        print("", rootNode, bw);
         bw.flush();
 
     }
 
-    private static void nodePrint(int depth, TrieNode node, BufferedWriter bw) throws IOException {
+    private static void print(String prefix, TrieNode node, BufferedWriter bw) throws IOException {
         TrieNode nowNode = node;
         for (String string : nowNode.childNodes.keySet()) {
-            for (int i = 0; i < depth; i++) {
-                bw.write(" ");
-            }
-            bw.write(string + "\n");
+
+            bw.write(prefix + string + "\n");
             TrieNode childNode = nowNode.childNodes.get(string);
             // 자식노드가 마지막이 아니라면 더 들어가셈
-            if (!childNode.isLastChar) {
-                nodePrint(depth + 1, childNode, bw);
+            if (childNode.isNotLastChild) {
+                print(prefix + " ", childNode, bw);
             }
         }
 
@@ -58,14 +43,22 @@ public class G2디스크트리7432 {
     static class TrieNode {
         // 자식 노드 맵
         Map<String, TrieNode> childNodes;
-        // 마지막 글자인지 여부
-        boolean isLastChar;
+        // 마지막 자식인지 여부
+        boolean isNotLastChild;
 
         public TrieNode(boolean isLastChar) {
             this.childNodes = new TreeMap<>();
-            this.isLastChar = isLastChar;
+            this.isNotLastChild = isLastChar;
+        }
+
+        public TrieNode addChild(String name) {
+            if (!childNodes.containsKey(name)) {
+                childNodes.put(name, new TrieNode(true));
+            }
+            return childNodes.get(name);
         }
     }
 
 }
 // https://www.acmicpc.net/problem/7432
+// 356ms -> 304ms 최적화
