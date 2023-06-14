@@ -6,7 +6,7 @@ import java.util.*;
 public class P4휴대폰자판5670 {
     static TrieNode rootNode;
     static String[] words;
-    static int res;
+    static double res;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -15,7 +15,7 @@ public class P4휴대폰자판5670 {
 
         rootNode = new TrieNode();
         words = new String[n];
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < n; i++) {
             words[i] = br.readLine();
             rootNode.addChild(words[i]);
         }
@@ -23,17 +23,25 @@ public class P4휴대폰자판5670 {
             exploreTrie(rootNode.childNode.get(c), 1);
         }
 
-        System.out.println(res);
+        System.out.println(res / words.length);
     }
 
-    public static int exploreTrie(TrieNode tempNode, int cnt) {
+    public static void exploreTrie(TrieNode tempNode, int cnt) {
         for (char c : tempNode.childNode.keySet()) {
-            if (tempNode.childNode.get(c).isLastChar) {
-                res++;
+            if (tempNode.childNode.size() == 1) {
+                // 가는 길에 마지막 단어가 있으면 곱하기 2
+                if (tempNode.childNode.get(c).isLastChar) {
+                    res += cnt;
+                    exploreTrie(tempNode.childNode.get(c), cnt + 1);
+                    // 자동 입력이면 그대로
+                } else {
+                    exploreTrie(tempNode.childNode.get(c), cnt);
+                }
+            } else {
+                exploreTrie(tempNode.childNode.get(c), cnt + 1);
+
             }
-            exploreTrie(tempNode.childNode.get(c), 1);
         }
-        return 0;
     }
 
     static class TrieNode {
