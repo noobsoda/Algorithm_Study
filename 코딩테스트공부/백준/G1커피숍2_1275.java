@@ -20,6 +20,7 @@ public class G1커피숍2_1275 {
             arr[i] = Integer.parseInt(st.nextToken());
 
         }
+        SegmentTree segmentTree = new SegmentTree(arr);
         for (int i = 0; i < Q; i++) {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
@@ -27,20 +28,27 @@ public class G1커피숍2_1275 {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-        }
-        SegmentTree segmentTree = new SegmentTree(arr);
+            if (x > y) {
+                bw.write(segmentTree.query(y - 1, x - 1) + "");
 
-        System.out.println(segmentTree.query(0, 2));
+            } else {
+                bw.write(segmentTree.query(x - 1, y - 1) + "");
+            }
+            bw.newLine();
+            segmentTree.update(a - 1, b);
+
+        }
+        bw.flush();
 
     }
 
     static class SegmentTree {
-        int[] tree;
+        long[] tree;
         int[] arr;
 
         public SegmentTree(int[] arr) {
             int n = arr.length;
-            tree = new int[4 * n];
+            tree = new long[4 * n];
             this.arr = arr;
             buildTree(1, 0, n - 1);
         }
@@ -77,11 +85,11 @@ public class G1커피숍2_1275 {
             tree[node] = tree[node * 2] + tree[node * 2 + 1];
         }
 
-        public int query(int left, int right) {
+        public long query(int left, int right) {
             return queryTree(1, 0, arr.length - 1, left, right);
         }
 
-        private int queryTree(int node, int start, int end, int left, int right) {
+        private long queryTree(int node, int start, int end, int left, int right) {
             if (right < start || end < left) {
                 return 0;
             }
@@ -91,8 +99,8 @@ public class G1커피숍2_1275 {
             }
 
             int mid = (start + end) / 2;
-            int sumLeft = queryTree(node * 2, start, mid, left, right);
-            int sumRight = queryTree(node * 2 + 1, mid + 1, end, left, right);
+            long sumLeft = queryTree(node * 2, start, mid, left, right);
+            long sumRight = queryTree(node * 2 + 1, mid + 1, end, left, right);
             return sumLeft + sumRight;
         }
     }
