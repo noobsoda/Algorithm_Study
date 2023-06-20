@@ -13,7 +13,6 @@ public class P3용량부족5446 {
         T = Integer.parseInt(br.readLine());
         for (int tc = 0; tc < T; tc++) {
             rootNode = new TrieNode();
-            rootNode.isProtected = true;
             res = 0;
             int n1 = Integer.parseInt(br.readLine());
             for (int i = 0; i < n1; i++) {
@@ -23,26 +22,30 @@ public class P3용량부족5446 {
             int n2 = Integer.parseInt(br.readLine());
             for (int i = 0; i < n2; i++) {
                 String nRemoveFile = br.readLine();
+                rootNode.isProtected = true;
                 rootNode.addProtectChild(nRemoveFile);
 
             }
-            exploreTrie(rootNode);
+            exploreTrie(rootNode, false);
 
             System.out.println(res);
         }
 
     }
 
-    public static void exploreTrie(TrieNode tempNode) {
-        if (tempNode.isLastChar && !tempNode.isProtected) {
+    public static void exploreTrie(TrieNode tempNode, boolean wildFlag) {
+        if (wildFlag && tempNode.isRemoved && tempNode.isProtected) {
+            res += 1;
+            wildFlag = false;
+        }
+        if (!tempNode.isProtected) {
             res += 1;
             return;
-        } else if (!tempNode.isProtected) {
-            res += 1;
-            return;
+        } else if (tempNode.isLastChar) {
+            wildFlag = true;
         }
         for (char c : tempNode.childNode.keySet()) {
-            exploreTrie(tempNode.childNode.get(c));
+            exploreTrie(tempNode.childNode.get(c), wildFlag);
 
         }
     }
@@ -50,6 +53,7 @@ public class P3용량부족5446 {
     static class TrieNode {
         Map<Character, TrieNode> childNode;
         boolean isLastChar;
+        boolean isRemoved;
         boolean isProtected;
 
         public TrieNode() {
@@ -66,6 +70,7 @@ public class P3용량부족5446 {
                     tempNode.childNode.put(c, new TrieNode());
                 }
                 tempNode = tempNode.childNode.get(c);
+                tempNode.isRemoved = true;
             }
             tempNode.isLastChar = true;
         }
@@ -82,7 +87,6 @@ public class P3용량부족5446 {
                 tempNode = tempNode.childNode.get(c);
                 tempNode.isProtected = true;
             }
-            tempNode.isLastChar = true;
         }
 
     }
