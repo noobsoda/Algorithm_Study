@@ -6,6 +6,7 @@ import java.util.*;
 public class P3용량부족5446 {
     static TrieNode rootNode;
     static int T, res;
+    static int isLastCharFlag;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,6 +15,7 @@ public class P3용량부족5446 {
         for (int tc = 0; tc < T; tc++) {
             rootNode = new TrieNode();
             res = 0;
+            isLastCharFlag = -1;
             int n1 = Integer.parseInt(br.readLine());
             for (int i = 0; i < n1; i++) {
                 String removeFile = br.readLine();
@@ -22,39 +24,53 @@ public class P3용량부족5446 {
             int n2 = Integer.parseInt(br.readLine());
             for (int i = 0; i < n2; i++) {
                 String nRemoveFile = br.readLine();
-                rootNode.isProtected = true;
                 rootNode.addProtectChild(nRemoveFile);
 
             }
-            exploreTrie(rootNode, false);
 
-            System.out.println(res);
+            boolean canRmAll = true;
+
+            for (char c : rootNode.childNode.keySet()) {
+                TrieNode tempNode = rootNode.childNode.get(c);
+
+                if (!tempNode.isRemoved) {
+                    canRmAll = false;
+                    break;
+                }
+
+            }
+            for (char c : rootNode.childNode.keySet()) {
+                res += exploreTrie(rootNode.childNode.get(c));
+            }
+            // 한 글자로 모든 노드를 표현할 수 있다면 1
+            System.out.println((canRmAll) ? 1 : res);
         }
 
     }
 
-    public static void exploreTrie(TrieNode tempNode, boolean wildFlag) {
-        if (wildFlag && tempNode.isRemoved && tempNode.isProtected) {
-            res += 1;
-            wildFlag = false;
+    public static int exploreTrie(TrieNode tempNode) {
+        int ret = 0;
+        // 마지막 노드이고 보호되는 노드라면 +1
+        if (tempNode.isLastChar && !tempNode.isRemoved) {
+            ret++;
         }
-        if (!tempNode.isProtected) {
-            res += 1;
-            return;
-        } else if (tempNode.isLastChar) {
-            wildFlag = true;
-        }
-        for (char c : tempNode.childNode.keySet()) {
-            exploreTrie(tempNode.childNode.get(c), wildFlag);
+        // 지워야하는 노드라면 +1 하고 탐색 X
+        if (tempNode.isRemoved) {
+            ret++;
+        } else { // 보호되는 노드라면 더 깊게 탐색
+            for (char c : tempNode.childNode.keySet()) {
+                ret += exploreTrie(tempNode.childNode.get(c));
 
+            }
         }
+        return ret;
+
     }
 
     static class TrieNode {
         Map<Character, TrieNode> childNode;
         boolean isLastChar;
         boolean isRemoved;
-        boolean isProtected;
 
         public TrieNode() {
             childNode = new HashMap<>();
@@ -85,7 +101,8 @@ public class P3용량부족5446 {
                     tempNode.childNode.put(c, new TrieNode());
                 }
                 tempNode = tempNode.childNode.get(c);
-                tempNode.isProtected = true;
+                tempNode.isRemoved = false;
+
             }
         }
 
