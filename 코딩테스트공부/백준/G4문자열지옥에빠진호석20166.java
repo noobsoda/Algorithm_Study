@@ -4,11 +4,11 @@ import java.io.*;
 import java.util.*;
 
 /**
- * 메모리제이션을 추가로 활용할것
+ * Dfs 탐색같은 접근이 아니라 미리 Hash를 통해서 값을 미리 구하면 K == 1000 일때도 빠르게 할 수 있음
  */
-public class G5문자열지옥에빠진호석20166 {
+public class G4문자열지옥에빠진호석20166 {
     static int N, M, K, res;
-    static Map<String, String> hMap;
+    static Map<String, Integer> hMap;
     static char map[][];
     static int dx[] = { -1, -1, -1, 0, 1, 1, 1, 0 };
     static int dy[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
@@ -28,31 +28,36 @@ public class G5문자열지옥에빠진호석20166 {
             String input = br.readLine();
             map[i] = input.toCharArray();
         }
-        for (int i = 0; i < K; i++) {
-            res = 0;
-            String favWord = br.readLine();
-            for (int x = 0; x < N; x++) {
-                for (int y = 0; y < M; y++) {
-                    // 시작단어가 일치하지 않는다면 X
-                    if (map[x][y] != favWord.charAt(0))
-                        continue;
-                    dfs(favWord, x, y, 0);
-
+        res = 0;
+        for (int x = 0; x < N; x++) {
+            for (int y = 0; y < M; y++) {
+                for (int j = 1; j <= 5; j++) {
+                    dfs(new StringBuilder(), j, x, y, 0);
                 }
+
             }
-            bw.write(res + "\n");
+        }
+        for (int i = 0; i < K; i++) {
+            String favWord = br.readLine();
+            if (hMap.containsKey(favWord)) {
+                bw.write(hMap.get(favWord) + "\n");
+            } else {
+                bw.write(0 + "\n");
+            }
         }
         bw.flush();
 
     }
 
-    public static void dfs(String favWord, int x, int y, int depth) {
-
+    public static void dfs(StringBuilder sb, int length, int x, int y, int depth) {
+        sb.append(map[x][y]);
         // 문자열이 일치하지 않는다면 X
-        if (map[x][y] != favWord.charAt(depth)) {
-            return;
-        }
-        if (depth == favWord.length() - 1) {
+        if (depth == length - 1) {
+            if (hMap.containsKey(sb.toString())) {
+                hMap.put(sb.toString(), hMap.get(sb.toString()) + 1);
+            } else {
+                hMap.put(sb.toString(), 1);
+            }
             res++;
             return;
         }
@@ -72,7 +77,8 @@ public class G5문자열지옥에빠진호석20166 {
             } else if (ny >= M) {
                 ny = 0;
             }
-            dfs(favWord, nx, ny, depth + 1);
+            dfs(sb, length, nx, ny, depth + 1);
+            sb.deleteCharAt(sb.length() - 1);
 
         }
     }
