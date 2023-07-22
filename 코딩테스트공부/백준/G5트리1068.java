@@ -43,31 +43,33 @@ public class G5트리1068 {
         st = new StringTokenizer(br.readLine());
         delNum = Integer.parseInt(st.nextToken());
 
-        order(root, delNum);
+        order(root, root.child.size(), delNum);
         System.out.println(res);
     }
 
-    static void order(Tree tree, int delNum) {
+    static void order(Tree tree, int size, int delNum) {
         // 삭제 노드와 만났을 시 돌아가기
         if (tree.n == delNum) {
+            // 바로 이전 노드의 상위 노드가 하나밖에 없을 경우 리프 노드가 된다.
+            if (size == 1) {
+                res++;
+            }
             return;
         }
         // 리프 노드시 +1
-        if (tree.left == null && tree.right == null) {
+        if (tree.child.size() == 0) {
             res++;
             return;
         }
 
-        order(tree.left, delNum);
-        order(tree.right, delNum);
+        for (Tree temp : tree.child) {
+            order(temp, tree.child.size(), delNum);
+
+        }
     }
 
     static void addTree(Tree addNode, int n) {
-        if (addNode.left == null) {
-            addNode.left = new Tree(n);
-        } else {
-            addNode.right = new Tree(n);
-        }
+        addNode.child.add(new Tree(n));
     }
 
     static Tree exploreTree(Tree tree, int parent) {
@@ -77,15 +79,16 @@ public class G5트리1068 {
         if (tree.n == parent) {
             return tree;
         } else {
-            Tree left = exploreTree(tree.left, parent);
-            Tree right = exploreTree(tree.right, parent);
+            Tree findChild = null;
+            for (Tree temp : tree.child) {
+                Tree child = exploreTree(temp, parent);
+                if (child != null) {
+                    findChild = child;
+                }
 
-            if (left != null) {
-                return left;
-            } else if (right != null) {
-                return right;
             }
-            return null;
+
+            return findChild;
         }
     }
 
@@ -100,13 +103,15 @@ public class G5트리1068 {
 
     static class Tree {
         int n;
-        Tree left, right;
+        List<Tree> child;
 
         public Tree(int n) {
             this.n = n;
-            this.left = null;
-            this.right = null;
+            this.child = new ArrayList<>();
         }
 
     }
 }
+// 이진트리인줄알고 착각함 이진트리 아님
+// 98%에서 틀림 원인은 루트노드가 리프노드가 안될것이라고 착각한 점
+// https://www.acmicpc.net/problem/1068
