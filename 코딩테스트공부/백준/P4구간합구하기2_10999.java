@@ -25,8 +25,7 @@ public class P4구간합구하기2_10999 {
 
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            int n = Integer.parseInt(st.nextToken());
-
+            Integer.parseInt(st.nextToken());
         }
         for (int i = 0; i < M + K; i++) {
             st = new StringTokenizer(br.readLine());
@@ -34,6 +33,7 @@ public class P4구간합구하기2_10999 {
         }
 
     }
+
     static class SegmentTree {
         long[] tree;
         int[] arr;

@@ -81,16 +81,16 @@ public class G1포탑부수기 {
 
     }
 
-    private static void print() {
-        System.out.println();
-        int temp[][] = new int[N][M];
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                temp[i][j] = map[i][j].power;
-            }
-            System.out.println(Arrays.toString(temp[i]));
-        }
-    }
+    // private static void print() {
+    // System.out.println();
+    // int temp[][] = new int[N][M];
+    // for (int i = 0; i < N; i++) {
+    // for (int j = 0; j < M; j++) {
+    // temp[i][j] = map[i][j].power;
+    // }
+    // System.out.println(Arrays.toString(temp[i]));
+    // }
+    // }
 
     private static void recoveryTurret() {
         // 포탑 공격과 무관했던 포탑은 공격력이 1씩 올라갑니데이
