@@ -85,36 +85,34 @@ public class G1토끼와경주 {
 
             // 상하좌우 4개 위치 구하기 (최적화)
             for (int j = 0; j < 4; j++) {
-                int nx = (nowRabbit.x + dx[j] * nowRabbit.dist) % ((N - 1) * 2);
-                int ny = (nowRabbit.y + dy[j] * nowRabbit.dist) % ((M - 1) * 2);
+                int nx = nowRabbit.x + (dx[j] * nowRabbit.dist % ((N - 1) * 2));
+                int ny = nowRabbit.y + (dy[j] * nowRabbit.dist % ((M - 1) * 2));
 
-                // 여기 수정
+                // 전체적으로 다시 수정
                 if (nx < 0) {
-                    nx += nowRabbit.x;
-                    nx *= -1;
+                    nx = Math.abs(nx);
                     if (nx >= N) {
-                        nx -= N - 1;
+                        int diff = nx - (N - 1);
+                        nx = (N - 1) - diff;
                     }
                 } else if (nx >= N) {
-                    nx -= nowRabbit.x;
-                    nx *= -1;
+                    int diff = nx - (N - 1);
+                    nx = (N - 1) - diff;
                     if (nx < 0) {
-                        nx += N - 1;
+                        nx = Math.abs(nx);
                     }
-                    // 여긴 정상
                 } else if (ny < 0) {
-                    ny += nowRabbit.y;
-                    ny *= -1;
+                    ny = Math.abs(ny);
                     if (ny >= M) {
-                        ny -= ny - (M - 1);
+                        int diff = ny - (M - 1);
+                        ny = (M - 1) - diff;
                     }
 
-                    // 여기도 정상인듯
                 } else if (ny >= M) {
-                    ny -= M - 1 - nowRabbit.y;
-                    ny *= -1;
+                    int diff = ny - (M - 1);
+                    ny = (M - 1) - diff;
                     if (ny < 0) {
-                        ny += M - 1;
+                        ny = Math.abs(ny);
                     }
                 }
 
@@ -137,7 +135,7 @@ public class G1토끼와경주 {
             nowRabbit.x = maxX;
             nowRabbit.y = maxY;
 
-            int maxPosition = maxX + maxY;
+            int maxPosition = maxX + 1 + maxY + 1;
             // i번 토끼를 제외한 나머지 토꺵이들 점수 더해주기
             for (Iterator<Rabbit> it = rabbitQ.iterator(); it.hasNext();) {
                 Rabbit rabbit = it.next();
@@ -161,11 +159,12 @@ public class G1토끼와경주 {
                 }
                 return (o2.x + o2.y) - (o1.x + o1.y);
             }
-            return Boolean.compare(o1.isUsed, o2.isUsed);
+            return Boolean.compare(o2.isUsed, o1.isUsed);
         });
         // 사용한 토끼중에 가장 우선순위가 높은 토끼 점수 더해주기
         Rabbit maxRabbit = rabbits.get(0);
-        maxRabbit.score += s;
+        if (maxRabbit.isUsed)
+            maxRabbit.score += s;
 
         // 사용한 토끼들 비사용으로 바꾸기
         for (Rabbit rabbit : rabbits) {
@@ -222,3 +221,5 @@ public class G1토끼와경주 {
     }
 
 }
+// https://www.codetree.ai/training-field/frequent-problems/problems/rabit-and-race/submissions?page=1&pageSize=20
+// 2805ms 1번 실패 : 정렬을 반대로 했음 boolean 정렬 방식을 잘 알고 있을 것
